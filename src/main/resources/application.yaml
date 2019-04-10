@@ -1,0 +1,51 @@
+server:
+  port: 8080
+
+###################################################################################
+# Local 환경
+---
+spring:
+  profiles: local
+
+  jpa:
+    hibernate:
+      ddl-auto: update    # 엔티티 변경된 부분만 DB에 반영
+    show-sql: true
+
+  datasource:
+    url: jdbc:mariadb://192.168.99.100:3306/stc_sns
+    username: root
+    password: qwe123
+    driver-class-name: org.mariadb.jdbc.Driver
+
+  security:
+    user:
+      name: user
+      password: 1234
+
+server:
+  port: 8080
+
+
+###################################################################################
+# Dev 환경
+---
+spring:
+  profiles: dev
+
+  jpa:
+    hibernate:
+      ddl-auto: validate    # 엔티티와 테이블 정상 맴핑 여부만 확인
+    show-sql: true
+
+server:
+  port: 8087
+
+
+###################################################################################
+# Real 환경
+---
+spring:
+  profiles: real
+server:
+  port: 8087
