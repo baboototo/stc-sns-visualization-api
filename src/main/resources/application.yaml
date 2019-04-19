@@ -13,10 +13,10 @@ spring:
     show-sql: true
 
   datasource:
-    url: jdbc:mariadb://192.168.99.100:3306/stc_sns
-    username: root
-    password: qwe123
-    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:oracle:thin:@121.124.124.40:1521:ORCL
+    username: stc_mdr
+    password: STC_MDR
+    driver-class-name: oracle.jdbc.driver.OracleDriver
 
   security:
     user:
@@ -37,6 +37,17 @@ spring:
     hibernate:
       ddl-auto: validate    # 엔티티와 테이블 정상 맴핑 여부만 확인
     show-sql: true
+
+  datasource:
+    url: jdbc:mariadb://192.168.99.100:3306/stc_sns
+    username: root
+    password: qwe123
+    driver-class-name: org.mariadb.jdbc.Driver
+
+  security:
+    user:
+      name: user
+      password: 1234
 
 server:
   port: 8087
