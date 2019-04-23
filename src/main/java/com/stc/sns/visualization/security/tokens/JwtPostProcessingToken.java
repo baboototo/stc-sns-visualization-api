@@ -1,6 +1,6 @@
 package com.stc.sns.visualization.security.tokens;
 
-import com.stc.sns.visualization.domain.user.UserRole;
+import com.stc.sns.visualization.jpa.domain.user.UserRole;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

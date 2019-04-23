@@ -1,7 +1,7 @@
 package com.stc.sns.visualization.security.providers;
 
-import com.stc.sns.visualization.domain.user.Account;
-import com.stc.sns.visualization.domain.user.AccountRepository;
+import com.stc.sns.visualization.jpa.domain.user.Account;
+import com.stc.sns.visualization.jpa.domain.user.AccountRepository;
 import com.stc.sns.visualization.security.AccountContext;
 import com.stc.sns.visualization.security.tokens.PostAuthorizationToken;
 import com.stc.sns.visualization.security.tokens.PreAuthorizationToken;

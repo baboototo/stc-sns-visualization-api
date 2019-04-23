@@ -1,7 +1,7 @@
 package com.stc.sns.visualization.security;
 
-import com.stc.sns.visualization.domain.user.Account;
-import com.stc.sns.visualization.domain.user.AccountRepository;
+import com.stc.sns.visualization.jpa.domain.user.Account;
+import com.stc.sns.visualization.jpa.domain.user.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

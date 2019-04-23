@@ -1,6 +1,6 @@
 package com.stc.sns.visualization.security.tokens;
 
-import com.stc.sns.visualization.domain.user.Account;
+import com.stc.sns.visualization.jpa.domain.user.Account;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 /**

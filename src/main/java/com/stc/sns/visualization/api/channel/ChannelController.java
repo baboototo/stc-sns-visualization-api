@@ -1,8 +1,7 @@
 package com.stc.sns.visualization.api.channel;
 
-import com.stc.sns.visualization.domain.channel.BigLclsChnl;
-import com.stc.sns.visualization.domain.channel.BigLclsChnlRepository;
-import com.stc.sns.visualization.domain.channel.BigMclsChnl;
+import com.stc.sns.visualization.jpa.domain.channel.BigLclsChnl;
+import com.stc.sns.visualization.jpa.domain.channel.BigLclsChnlRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.security.access.prepost.PreAuthorize;

@@ -1,7 +1,7 @@
 package com.stc.sns.visualization.security.filters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.stc.sns.visualization.domain.user.Account;
+import com.stc.sns.visualization.jpa.domain.user.Account;
 import com.stc.sns.visualization.security.tokens.PreAuthorizationToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

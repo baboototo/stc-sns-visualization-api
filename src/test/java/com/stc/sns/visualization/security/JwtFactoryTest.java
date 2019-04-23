@@ -1,7 +1,7 @@
 package com.stc.sns.visualization.security;
 
-import com.stc.sns.visualization.domain.user.Account;
-import com.stc.sns.visualization.domain.user.UserRole;
+import com.stc.sns.visualization.jpa.domain.user.Account;
+import com.stc.sns.visualization.jpa.domain.user.UserRole;
 import com.stc.sns.visualization.security.jwt.JwtFactory;
 import org.junit.Before;
 import org.junit.Test;

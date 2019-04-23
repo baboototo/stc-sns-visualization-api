@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stc.sns.visualization.mybatis.mapper.WordCloudMapper">
+    <select id="getWordCloudList" resultType="WordCloudVO">
+        SELECT WRD_NM AS wrdNm, COUNT(*) AS wrdCnt
+        FROM  (
+                SELECT DISTINCT CLC_DOC_NUM
+                FROM BIG_TPC_TXT_ANAL_T3M
+                WHERE WRD_NM = '이해'
+              ) X,
+              BIG_TPC_TXT_ANAL_T3M Y
+        WHERE X.CLC_DOC_NUM = Y.CLC_DOC_NUM
+          AND Y.WRD_NM NOT IN ( '이해', '문화','체육','관광')
+        GROUP BY WRD_NM
+        ORDER BY wrdCnt DESC
+    </select>
+</mapper>

@@ -1,6 +1,11 @@
 server:
   port: 8080
 
+mybatis:
+  type-aliases-package: com.stc.sns.visualization.mybatis.domain
+  mapper-locations: mapper/**/*Mapper.xml
+
+
 ###################################################################################
 # Local 환경
 ---
@@ -25,6 +30,7 @@ spring:
 
 server:
   port: 8080
+
 
 
 ###################################################################################
