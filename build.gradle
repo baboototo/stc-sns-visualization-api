@@ -53,7 +53,6 @@ dependencies {
     implementation 'com.auth0:java-jwt:3.8.0'
     implementation 'com.oracle:ojdbc6:11.2.0.3'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.0.1'
-    implementation 'org.mybatis.my'
     implementation 'org.mariadb.jdbc:mariadb-java-client'
     implementation "com.querydsl:querydsl-apt"
     implementation "com.querydsl:querydsl-jpa"
