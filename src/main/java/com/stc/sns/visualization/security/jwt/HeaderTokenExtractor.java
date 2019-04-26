@@ -14,7 +14,7 @@ public class HeaderTokenExtractor {
 
     public String extract(String header) {
 
-        if(StringUtils.isEmpty(header) | header.length() < HEADER_PREFIX.length()) {
+        if(StringUtils.isEmpty(header) || header.length() < HEADER_PREFIX.length()) {
             throw new InvalidJwtException("올바른 토큰 정보가 아닙니다.");
         }
 

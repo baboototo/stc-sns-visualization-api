@@ -14,7 +14,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update    # 엔티티 변경된 부분만 DB에 반영
+      ddl-auto: validate    # 엔티티 변경된 부분만 DB에 반영
     show-sql: true
 
   datasource:
@@ -29,7 +29,7 @@ spring:
       password: 1234
 
 server:
-  port: 8080
+  port: 80
 
 
 
