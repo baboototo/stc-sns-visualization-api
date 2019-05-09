@@ -10,7 +10,7 @@ import org.apache.ibatis.type.Alias;
 @NoArgsConstructor
 @Alias("WordCloudVO")
 public class WordCloudVO {
-    private String wrdNm;
-    private Long wrdCnt;
+    private String name;
+    private Long value;
 
 }

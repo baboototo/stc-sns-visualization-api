@@ -6,6 +6,7 @@ import com.stc.sns.visualization.security.AccountContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.io.UnsupportedEncodingException;
 
@@ -14,7 +15,8 @@ public class JwtFactory {
 
     private static final Logger log = LoggerFactory.getLogger(JwtFactory.class);
 
-    private static String signingKey = "STC_JWT_TOKEN_KEY";
+    public final static String aes256Key = "STC_AES256_TOKEN";
+    public final static String signingKey = "STC_JWT_TOKEN_KEY";
 
     public String generateToken(AccountContext context) {
         String token = null;
@@ -25,6 +27,12 @@ public class JwtFactory {
                     .withClaim("USERNAME", context.getAccount().getUserId())
                     .withClaim("USER_ROLE", context.getAccount().getUserRole().getRoleName())
                     .sign(generateAlgorithm());
+
+            if (!StringUtils.isEmpty(token)) {
+                AES256Util util = new AES256Util(aes256Key);
+                token = util.encrypt(token);
+            }
+
         } catch (Exception e) {
             log.error(e.getMessage());
         }

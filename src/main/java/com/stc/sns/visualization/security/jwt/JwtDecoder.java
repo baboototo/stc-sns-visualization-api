@@ -8,6 +8,7 @@ import com.stc.sns.visualization.security.AccountContext;
 import com.stc.sns.visualization.security.exceptions.InvalidJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -18,12 +19,24 @@ public class JwtDecoder {
     private static final Logger log = LoggerFactory.getLogger(JwtDecoder.class);
 
     public AccountContext decodeJwt(String token) {
-        DecodedJWT decodedJWT = isValidToken(token).orElseThrow(() -> new InvalidJwtException("유효한 토큰아 아닙니다."));
 
-        String username = decodedJWT.getClaim("USERNAME").asString();
-        String role = decodedJWT.getClaim("USER_ROLE").asString();
+        try {
+            AES256Util util = new AES256Util(JwtFactory.aes256Key);
 
-        return new AccountContext(username, "1234", role);
+
+            DecodedJWT decodedJWT = isValidToken(util.decrypt(token)).orElseThrow(() -> new InvalidJwtException("유효한 토큰아 아닙니다."));
+
+//            DecodedJWT decodedJWT = isValidToken(token).orElseThrow(() -> new InvalidJwtException("유효한 토큰아 아닙니다."));
+            String username = decodedJWT.getClaim("USERNAME").asString();
+            String role = decodedJWT.getClaim("USER_ROLE").asString();
+
+            return new AccountContext(username, "1234", role);
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     private Optional<DecodedJWT> isValidToken(String token) {
@@ -31,7 +44,7 @@ public class JwtDecoder {
         DecodedJWT jwt = null;
 
         try {
-            Algorithm algorithm = Algorithm.HMAC256("STC_JWT_TOKEN_KEY");
+            Algorithm algorithm = Algorithm.HMAC256(JwtFactory.signingKey);
             JWTVerifier verifier = JWT.require(algorithm).build();
 
             jwt = verifier.verify(token);
