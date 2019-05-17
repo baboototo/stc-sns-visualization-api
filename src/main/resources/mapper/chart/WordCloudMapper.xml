@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stc.sns.visualization.mybatis.mapper.WordCloudMapper">
+    <select id="searchWordCloudList" resultType="BaseChartVO" parameterType="BaseRequestParamVO">
+        SELECT  WRD_NM      AS name
+                , DOC_CNT   AS value
+          FROM (
+                SELECT YY.WRD_NM, COUNT(XX.CLC_DOC_NUM) AS DOC_CNT
+                  FROM (
+                        SELECT X.CLC_DOC_NUM
+                          FROM BIG_TPC_TXT_ANAL X,
+                               BIG_TPC_RST Y,
+                               BIG_TPC_MST M
+                         WHERE X.CLC_DOC_NUM  = Y.CLC_DOC_NUM
+                           AND Y.ASK_NUM      = M.ASK_NUM
+                        <if test="keyword != null">
+                            AND X.WRD_NM       = #{keyword}
+                        </if>
+                           AND M.CUST_ID      = #{custId}
+                           AND M.USE_YN       = 'Y'
+                       ) XX,
+                       BIG_TPC_TXT_ANAL YY
+                 WHERE XX.CLC_DOC_NUM = YY.CLC_DOC_NUM
+                <if test="keyword != null">
+                   AND YY.WRD_NM NOT IN (#{keyword}, '문화','체육','관광')
+                </if>
+                 GROUP BY YY.WRD_NM
+                 ORDER BY COUNT(XX.CLC_DOC_NUM) DESC
+              )
+         WHERE ROWNUM <![CDATA[<]]> 101
+    </select>
+</mapper>

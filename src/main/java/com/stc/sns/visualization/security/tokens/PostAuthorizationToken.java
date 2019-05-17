@@ -1,5 +1,6 @@
 package com.stc.sns.visualization.security.tokens;
 
+import com.stc.sns.visualization.jpa.domain.user.Account;
 import com.stc.sns.visualization.security.AccountContext;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,4 +23,9 @@ public class PostAuthorizationToken extends UsernamePasswordAuthenticationToken 
     public static PostAuthorizationToken getTokenFromAccountContext(AccountContext context) {
         return new PostAuthorizationToken(context, context.getPassword(), context.getAuthorities());
     }
+
+    public Account getAccount() {
+        return this.getAccountContext().getAccount();
+    }
+
 }

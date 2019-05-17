@@ -1,7 +1,8 @@
 package com.stc.sns.visualization.mybatis.service;
 
+import com.stc.sns.visualization.mybatis.domain.BaseRequestParamVO;
 import com.stc.sns.visualization.mybatis.mapper.WordCloudMapper;
-import com.stc.sns.visualization.mybatis.domain.WordCloudVO;
+import com.stc.sns.visualization.mybatis.domain.BaseChartVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,12 @@ public class WordCloudService {
     @Autowired
     private WordCloudMapper wordCloudMapper;
 
-    public List<WordCloudVO> getWordCloudList() {
-        return this.wordCloudMapper.getWordCloudList();
+    /**
+     * Word Cloud
+     * @param paramVO
+     * @return
+     */
+    public List<BaseChartVO> searchWordCloudList(BaseRequestParamVO paramVO) {
+        return this.wordCloudMapper.searchWordCloudList(paramVO);
     }
 }

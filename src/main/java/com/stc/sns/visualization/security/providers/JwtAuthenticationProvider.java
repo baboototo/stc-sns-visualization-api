@@ -1,5 +1,7 @@
 package com.stc.sns.visualization.security.providers;
 
+import com.stc.sns.visualization.jpa.domain.user.Account;
+import com.stc.sns.visualization.jpa.domain.user.AccountRepository;
 import com.stc.sns.visualization.security.AccountContext;
 import com.stc.sns.visualization.security.jwt.JwtDecoder;
 import com.stc.sns.visualization.security.tokens.JwtPreProcessingToken;
@@ -10,20 +12,29 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
+import java.util.NoSuchElementException;
+
 @Component
 public class JwtAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
     private JwtDecoder jwtDecoder;
 
+    @Autowired
+    private AccountRepository accountRepository;
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
         String token = (String)authentication.getPrincipal();
-        AccountContext context = jwtDecoder.decodeJwt(token);
+        String username = jwtDecoder.decodeJwt(token);
+//        AccountContext context = jwtDecoder.decodeJwt(token);
 
-        return PostAuthorizationToken.getTokenFromAccountContext(context);
+        Account account = accountRepository.findByUserId(username).orElseThrow(() -> new NoSuchElementException("정보에 맞는 계정이 없습니다."));
+
+        return PostAuthorizationToken.getTokenFromAccountContext(AccountContext.fromAccountModel(account));
     }
+
 
     @Override
     public boolean supports(Class<?> aClass) {

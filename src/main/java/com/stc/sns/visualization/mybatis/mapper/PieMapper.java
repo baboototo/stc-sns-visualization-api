@@ -9,12 +9,12 @@ import java.util.List;
 
 @Repository
 @Mapper
-public interface WordCloudMapper {
+public interface PieMapper {
 
     /**
-     * Word Cloud 조회
+     * 키워드에 해당하는 채널 수집량 조회
      * @param paramVO
      * @return
      */
-    List<BaseChartVO> searchWordCloudList(BaseRequestParamVO paramVO);
+    List<BaseChartVO> searchChannelTotalByKeyword(BaseRequestParamVO paramVO);
 }

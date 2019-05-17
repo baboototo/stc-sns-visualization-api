@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stc.sns.visualization.mybatis.mapper.PieMapper">
+    <select id="searchChannelTotalByKeyword" resultType="BaseChartVO" parameterType="BaseRequestParamVO">
+        SELECT  Z.CHNL_LCLS_NM          AS name
+                , COUNT(X.CLC_DOC_NUM)  AS value
+        FROM    BIG_TPC_TXT_ANAL X,
+                BIG_TPC_RST Y,
+                BIG_TPC_MST M,
+                BIG_LCLS_CHNL Z
+        WHERE   X.CLC_DOC_NUM  = Y.CLC_DOC_NUM
+            AND Y.CHNL_LCLS_CD = Z.CHNL_LCLS_CD
+            AND Y.ASK_NUM      = M.ASK_NUM
+            AND X.WRD_NM       = #{keyword}
+            AND M.CUST_ID      = #{custId}
+            AND M.USE_YN       = 'Y'
+        GROUP BY Z.CHNL_LCLS_NM
+    </select>
+</mapper>

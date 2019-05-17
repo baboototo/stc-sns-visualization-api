@@ -23,7 +23,6 @@ public class Account extends BaseDomain implements Serializable {
     @Column(name = "PASSWORD")
     private String password;
 
-
     @Column(name = "USER_NAME")
     private String userName;
 
@@ -31,11 +30,15 @@ public class Account extends BaseDomain implements Serializable {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
+    @Column(name= "CUST_ID")
+    private String custId;
+
     @Builder
-    public Account(String userId, String password, String userName, UserRole userRole) {
+    public Account(String userId, String password, String userName, UserRole userRole, String custId) {
         this.userId = userId;
         this.password = password;
         this.userName = userName;
         this.userRole = userRole;
+        this.custId = custId;
     }
 }
