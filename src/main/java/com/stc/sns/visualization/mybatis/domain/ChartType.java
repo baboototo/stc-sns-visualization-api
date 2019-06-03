@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum ChartType {
 
-    PIE("pid");
+    PIE("pie"), LINE("line");
 
     private String chartName;
 

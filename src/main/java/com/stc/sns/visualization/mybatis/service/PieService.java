@@ -15,7 +15,7 @@ public class PieService {
     private PieMapper pieMapper;
 
     /**
-     * Å°¿öµå¿¡ ÇØ´çÇÏ´Â Ã¤³Î ¼öÁı·® Á¶È¸
+     * í‚¤ì›Œë“œì— í•´ë‹¹í•˜ëŠ” ì±„ë„ ìˆ˜ì§‘ëŸ‰ ì¡°íšŒ
      * @param paramVO
      * @return
      */

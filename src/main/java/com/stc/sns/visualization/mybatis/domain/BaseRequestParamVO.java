@@ -13,6 +13,8 @@ import org.apache.ibatis.type.Alias;
 public class BaseRequestParamVO {
     private String custId;
     private String keyword;
+    private String subKeyword;
     private String startDate;
     private String endDate;
+    private String chnlCd;
 }

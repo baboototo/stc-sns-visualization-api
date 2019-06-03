@@ -27,9 +27,6 @@ public class BigLclsChnl implements Serializable {
     @Column(name = "DSP_ORD", nullable = false)
     private Long dspOrd;
 
-//    @OneToMany(mappedBy = "bigLclsChnl", fetch = FetchType.EAGER)
-//    private List<BigMclsChnl> bigLclsChnls = new ArrayList<>();
-
     @Builder
     public BigLclsChnl(String chnlLclsCd, String chnlLclsNm, Long dspOrd) {
         this.chnlLclsCd = chnlLclsCd;

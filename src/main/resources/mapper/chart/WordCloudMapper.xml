@@ -28,6 +28,11 @@
                  GROUP BY YY.WRD_NM
                  ORDER BY COUNT(XX.CLC_DOC_NUM) DESC
               )
-         WHERE ROWNUM <![CDATA[<]]> 101
+        <if test="subKeyword == null">
+         WHERE ROWNUM <![CDATA[<]]> 301
+        </if>
+        <if test="subKeyword != null">
+            WHERE ROWNUM <![CDATA[<]]> 6
+        </if>
     </select>
 </mapper>

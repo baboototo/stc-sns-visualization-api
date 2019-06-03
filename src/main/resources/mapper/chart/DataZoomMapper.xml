@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stc.sns.visualization.mybatis.mapper.DataZoomMapper">
+    <select id="searchChannelByDays" resultType="DataZoomChartVO" parameterType="BaseRequestParamVO">
+        SELECT  KIJUN_DATE              AS xAxis
+                , KIJUN.CHNL_LCLS_NM    AS series
+                , NVL(CNT+CHN_CNT, 0)   AS seriesValue
+        FROM (
+                SELECT  DDATE.DAY KIJUN_DATE, CHNL_LCLS_CD, CHNL_LCLS_NM, 0 CNT
+                FROM    (
+                        SELECT  TO_CHAR( TO_DATE('20190101', 'YYYYMMDD') + ROWNUM-1, 'YYYYMMDD') AS DAY
+                        FROM    DUAL
+                        CONNECT BY level <![CDATA[<=]]> ROUND( TO_DATE('20191231', 'YYYYMMDD') - TO_DATE('20190101', 'YYYYMMDD') )
+                        ) DDATE
+                        , BIG_LCLS_CHNL CHNL
+                WHERE   CHNL_LCLS_CD = #{chnlCd}
+                ) KIJUN
+                , (
+                    SELECT Z.CHNL_LCLS_NM, Y.BASE_DATE, COUNT(X.CLC_DOC_NUM) AS CHN_CNT
+                    FROM    BIG_TPC_TXT_ANAL X,
+                            BIG_TPC_RST Y,
+                            BIG_TPC_MST M,
+                            BIG_LCLS_CHNL Z
+                    WHERE   X.CLC_DOC_NUM  = Y.CLC_DOC_NUM
+                        AND Y.CHNL_LCLS_CD = Z.CHNL_LCLS_CD
+                        AND Y.ASK_NUM      = M.ASK_NUM
+                        AND X.WRD_NM       = #{keyword}
+                        AND M.CUST_ID      = #{custId}
+                        AND M.USE_YN       = 'Y'
+                    GROUP BY Z.CHNL_LCLS_NM, Y.BASE_DATE
+                    ORDER BY Z.CHNL_LCLS_NM, Y.BASE_DATE
+                ) DATA
+        WHERE   KIJUN.KIJUN_DATE = DATA.BASE_DATE(+)
+            AND KIJUN.CHNL_LCLS_NM = DATA.CHNL_LCLS_NM(+)
+        ORDER BY KIJUN_DATE, CHNL_LCLS_CD
+    </select>
+</mapper>

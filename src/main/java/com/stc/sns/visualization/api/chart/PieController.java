@@ -28,14 +28,8 @@ public class PieController {
     @Autowired
     private PieService pieService;
 
-    /**
-     * 키워드에 해당하는 채널 수집량 조회
-     * @param authentication
-     * @param paramVO
-     * @return
-     */
-    @GetMapping("/v1.0/channelTotal")
-    public BaseResultChartVO searchChannelTotalByKeyword(Authentication authentication
+    @GetMapping("/v1.0/channels")
+    public BaseResultChartVO searchChannel(Authentication authentication
                                             , @ModelAttribute("BaseRequestParamVO") BaseRequestParamVO paramVO) {
         PostAuthorizationToken token = (PostAuthorizationToken)authentication;
         paramVO.setCustId(token.getAccount().getCustId());

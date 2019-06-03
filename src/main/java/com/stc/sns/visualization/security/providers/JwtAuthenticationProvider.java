@@ -30,7 +30,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         String username = jwtDecoder.decodeJwt(token);
 //        AccountContext context = jwtDecoder.decodeJwt(token);
 
-        Account account = accountRepository.findByUserId(username).orElseThrow(() -> new NoSuchElementException("Á¤º¸¿¡ ¸Â´Â °èÁ¤ÀÌ ¾ø½À´Ï´Ù."));
+        Account account = accountRepository.findByUserId(username).orElseThrow(() -> new NoSuchElementException("ì •ë³´ì— ë§ëŠ” ê³„ì •ì´ ì—†ìŠµë‹ˆë‹¤."));
 
         return PostAuthorizationToken.getTokenFromAccountContext(AccountContext.fromAccountModel(account));
     }
