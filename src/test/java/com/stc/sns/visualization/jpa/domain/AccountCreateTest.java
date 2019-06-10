@@ -1,5 +1,8 @@
-package com.stc.sns.visualization.jpa.domain.topic;
+package com.stc.sns.visualization.jpa.domain;
 
+import com.stc.sns.visualization.jpa.domain.user.Account;
+import com.stc.sns.visualization.jpa.domain.user.AccountRepository;
+import com.stc.sns.visualization.jpa.domain.user.UserRole;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,26 +11,19 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.List;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("local")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)    // DB 사용 설정
-public class BigTpcMstRepositoryImplTest {
+@RunWith(SpringRunner.class)
+public class AccountCreateTest {
 
     @Autowired
-    private BigTpcMstRepository bigTpcMstRepository;
+    private AccountRepository accountRepository;
 
     @Test
-    public void findAllById() {
+    public void createAccount() {
+        Account account = new Account("kisd", "qwe123", "강덕승", UserRole.USER, "2");
 
-        List<BigTpcMst> result = bigTpcMstRepository.findAllByAskNum("1");
-
-        assertThat(result.size(), is(1));
-        assertThat(result.get(0).getApiPrvdNm(), is("네이버(뉴스)"));
+        accountRepository.save(account);
     }
 }

@@ -1,68 +1,62 @@
-server:
-  port: 8080
-
-mybatis:
-  type-aliases-package: com.stc.sns.visualization.mybatis.domain
-  mapper-locations: mapper/**/*Mapper.xml
-
-
 ###################################################################################
 # Local 환경
 ---
+server:
+  port: 8090
+
 spring:
   profiles: local
 
   jpa:
     hibernate:
-      ddl-auto: validate    # 엔티티 변경된 부분만 DB에 반영
-    show-sql: true
+      ddl-auto: validate
 
   datasource:
-    url: jdbc:oracle:thin:@121.124.124.40:1521:ORCL
+    url: jdbc:log4jdbc:oracle:thin:@121.124.124.40:1521:ORCL
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     username: stc_mdr
     password: STC_MDR
-    driver-class-name: oracle.jdbc.driver.OracleDriver
 
   security:
     user:
       name: user
       password: 1234
 
-server:
-  port: 8080
+mybatis:
+  type-aliases-package: com.stc.sns.visualization.mybatis.domain
+  mapper-locations: mapper/**/*Mapper.xml
 
-
-
-###################################################################################
-# Dev 환경
----
-spring:
-  profiles: dev
-
-  jpa:
-    hibernate:
-      ddl-auto: validate    # 엔티티와 테이블 정상 맴핑 여부만 확인
-    show-sql: true
-
-  datasource:
-    url: jdbc:mariadb://192.168.99.100:3306/stc_sns
-    username: root
-    password: qwe123
-    driver-class-name: org.mariadb.jdbc.Driver
-
-  security:
-    user:
-      name: user
-      password: 1234
-
-server:
-  port: 8087
+logging:
+  file: D:\usr\local\stc-service\logs
 
 
 ###################################################################################
 # Real 환경
 ---
+server:
+  port: 8090
+
 spring:
   profiles: real
-server:
-  port: 8087
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+  datasource:
+    url: jdbc:log4jdbc:oracle:thin:@175.207.12.220:1521:ORCL
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    username: SNS_USER
+    password: STC0501
+
+  security:
+    user:
+      name: user
+      password: 1234
+
+mybatis:
+  type-aliases-package: com.stc.sns.visualization.mybatis.domain
+  mapperlocations: mapper/**/*Mapper.xml
+
+logging:
+  file: \usr\local\stc-service\logs

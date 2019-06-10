@@ -57,26 +57,21 @@ public class JwtDecoder {
 
 
     private Optional<Boolean> isValidLicense(DecodedJWT decodedJWT) {
-        boolean isLicense = false;
+        boolean isLicense = true;
 
-        Claim licenseStartClaim = decodedJWT.getClaim("LICENSE_S");
-        Claim licenseEndClaim = decodedJWT.getClaim("LICENSE_E");
-
-        if (!licenseStartClaim.isNull() && !licenseEndClaim.isNull()) {
-            LocalDate licenseStart = DateUtils.asLocalDate(decodedJWT.getClaim("LICENSE_S").asDate());
-            LocalDate licenseEnd = DateUtils.asLocalDate(decodedJWT.getClaim("LICENSE_E").asDate());
-
-            LocalDate nowLocalDate = LocalDate.now();
-
-            if (licenseStart.isAfter(nowLocalDate) && licenseEnd.isBefore(nowLocalDate)) {
-                isLicense = true;
-            }
-
-
-            log.info("Token License Start : " + DateUtils.asDateString(licenseStart));
-            log.info("Token License End   : " + DateUtils.asDateString(licenseEnd));
-            log.info("Token License       : " + isLicense);
-        }
+//        Claim licenseStartClaim = decodedJWT.getClaim("LICENSE_S");
+//        Claim licenseEndClaim = decodedJWT.getClaim("LICENSE_E");
+//
+//        if (!licenseStartClaim.isNull() && !licenseEndClaim.isNull()) {
+//            LocalDate licenseStart = DateUtils.asLocalDate(decodedJWT.getClaim("LICENSE_S").asDate());
+//            LocalDate licenseEnd = DateUtils.asLocalDate(decodedJWT.getClaim("LICENSE_E").asDate());
+//
+//            LocalDate nowLocalDate = LocalDate.now();
+//
+//            if (licenseStart.isAfter(nowLocalDate) && licenseEnd.isBefore(nowLocalDate)) {
+//                isLicense = true;
+//            }
+//        }
 
         return Optional.ofNullable(isLicense);
     }

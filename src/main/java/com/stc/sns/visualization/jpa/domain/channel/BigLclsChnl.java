@@ -30,7 +30,7 @@ public class BigLclsChnl implements Serializable {
     @Builder
     public BigLclsChnl(String chnlLclsCd, String chnlLclsNm, Long dspOrd) {
         this.chnlLclsCd = chnlLclsCd;
-        this.chnlLclsNm = this.chnlLclsNm;
+        this.chnlLclsNm = chnlLclsNm;
         this.dspOrd = dspOrd;
     }
 

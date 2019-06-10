@@ -17,21 +17,4 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 public class MybatisConfiguration {
 
-//    @Bean
-//    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception{
-//        SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-//        sessionFactory.setDataSource(dataSource);
-//
-//        Resource[] res = new PathMatchingResourcePatternResolver().getResources("classpath:mapper/**/*.xml");
-//
-//        sessionFactory.setMapperLocations(res);
-//        sessionFactory.setTypeAliasesPackage("com.stc.sns.visualization.mybatis.domain");
-//
-//        return sessionFactory.getObject();
-//    }
-//
-//    @Bean
-//    public SqlSessionTemplate sqlSession(SqlSessionFactory sqlSessionFactory) {
-//        return new SqlSessionTemplate(sqlSessionFactory);
-//    }
 }

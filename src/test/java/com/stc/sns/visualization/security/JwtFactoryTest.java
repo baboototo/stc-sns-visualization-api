@@ -29,7 +29,7 @@ public class JwtFactoryTest {
 
     @Before
     public void setUp() {
-        Account account = new Account("baboototo", "qwe123", "곽재영", UserRole.USER);
+        Account account = new Account("baboototo", "qwe123", "곽재영", UserRole.USER, "1");
         log.error("userid: {}, password: {}, role: {}", account.getUserId(), account.getPassword(), account.getUserRole());
         this.context = AccountContext.fromAccountModel(account);
     }
