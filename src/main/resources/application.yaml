@@ -8,8 +8,9 @@ spring:
   profiles: local
 
   jpa:
-    hibernate:
-      ddl-auto: validate
+    hibernate.ddl-auto: validate
+    properties.hibernate.show_sql: true
+    properties.hibernate.format_sql: true
 
   datasource:
     url: jdbc:log4jdbc:oracle:thin:@121.124.124.40:1521:ORCL
@@ -40,8 +41,9 @@ spring:
   profiles: real
 
   jpa:
-    hibernate:
-      ddl-auto: validate
+    hibernate.ddl-auto: validate
+    properties.hibernate.show_sql: true
+    properties.hibernate.format_sql: true
 
   datasource:
     url: jdbc:log4jdbc:oracle:thin:@175.207.12.220:1521:ORCL
