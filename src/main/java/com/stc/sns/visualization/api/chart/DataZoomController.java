@@ -21,8 +21,15 @@ public class DataZoomController {
     @Autowired
     private DataZoomService dataZoomService;
 
-    @GetMapping("/v1.0/channel/days/{keyword}")
-    public DataZoomResultChartVO searchChannelByDays(Authentication authentication
+    /**
+     * 채널별 수집 추이 일별 데이터 조회
+     * @param authentication
+     * @param keyword
+     * @param paramVO
+     * @return
+     */
+    @GetMapping("/v1.0/channels/collection/days/{keyword}")
+    public DataZoomResultChartVO searchChannelCollectionByDays(Authentication authentication
                                             , @PathVariable("keyword") String keyword
                                             , @ModelAttribute("BaseRequestParamVO") BaseRequestParamVO paramVO) {
         PostAuthorizationToken token = (PostAuthorizationToken)authentication;
@@ -30,9 +37,31 @@ public class DataZoomController {
         paramVO.setCustId(token.getAccount().getCustId());
         paramVO.setKeyword(keyword);
 
-        return this.dataZoomService.searchChannelByDays(paramVO);
+        return this.dataZoomService.searchChannelCollectionByDays(paramVO);
+    }
+
+    /**
+     * 특정채널에 해당하는 키워드의 채널 상세정보 수집 추이 일별 데이터 조회
+     * @param authentication
+     * @param chnlCd
+     * @param keyword
+     * @param paramVO
+     * @return
+     */
+    @GetMapping("/v1.0/channels/{chnlCd}/collection/days/{keyword}")
+    public DataZoomResultChartVO searchChannelDetailCollectionByDays(Authentication authentication
+            , @PathVariable("chnlCd") String chnlCd
+            , @PathVariable("keyword") String keyword
+            , @ModelAttribute("BaseRequestParamVO") BaseRequestParamVO paramVO) {
+        PostAuthorizationToken token = (PostAuthorizationToken)authentication;
+
+        paramVO.setCustId(token.getAccount().getCustId());
+        paramVO.setKeyword(keyword);
+        paramVO.setChnlCd(chnlCd);
+
+        return this.dataZoomService.searchChannelDetailCollectionByDays(paramVO);
     }
 
 
-
+//
 }

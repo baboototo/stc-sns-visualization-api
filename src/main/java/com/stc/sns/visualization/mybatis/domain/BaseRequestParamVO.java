@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.ibatis.type.Alias;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,4 +19,6 @@ public class BaseRequestParamVO {
     private String startDate;
     private String endDate;
     private String chnlCd;
+    private List<String> excludeKeywords;
+    private List<String> channels;
 }

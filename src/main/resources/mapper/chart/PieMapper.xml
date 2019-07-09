@@ -11,10 +11,40 @@
                 BIG_LCLS_CHNL Z
         WHERE   X.CLC_DOC_NUM  = Y.CLC_DOC_NUM
             AND Y.CHNL_LCLS_CD = Z.CHNL_LCLS_CD
+        <if test="channels.size > 0">
+            AND Y.CHNL_LCLS_CD IN
+            <foreach collection="channels" item="channel" index="index" open="(" separator="," close=")">
+                #{channel}
+            </foreach>
+        </if>
             AND Y.ASK_NUM      = M.ASK_NUM
             AND X.WRD_NM       = #{keyword}
+            AND Y.BASE_DATE BETWEEN #{startDate} AND #{endDate}
             AND M.CUST_ID      = #{custId}
             AND M.USE_YN       = 'Y'
-        GROUP BY Z.CHNL_LCLS_NM
+        GROUP BY Z.CHNL_LCLS_NM, Z.DSP_ORD
+        ORDER BY Z.DSP_ORD
     </select>
+
+    <select id="searchChannelDetailTotalByKeyword" resultType="BaseChartVO" parameterType="BaseRequestParamVO">
+        SELECT  Z.CHNL_MCLS_NM          AS name
+                , COUNT(X.CLC_DOC_NUM)  AS value
+        FROM    BIG_TPC_TXT_ANAL X,
+                BIG_TPC_RST Y,
+                BIG_TPC_MST M,
+                BIG_MCLS_CHNL Z
+        WHERE   X.CLC_DOC_NUM  = Y.CLC_DOC_NUM
+            AND Y.CHNL_LCLS_CD = #{chnlCd}
+            AND Y.CHNL_MCLS_CD = Z.CHNL_MCLS_CD
+            AND Y.ASK_NUM      = M.ASK_NUM
+            AND X.WRD_NM       = #{keyword}
+            AND Y.BASE_DATE BETWEEN #{startDate} AND #{endDate}
+            AND M.CUST_ID      = #{custId}
+            AND M.USE_YN       = 'Y'
+        GROUP BY Z.CHNL_MCLS_NM, Z.DSP_ORD
+        ORDER BY Z.DSP_ORD
+    </select>
+
+
+
 </mapper>

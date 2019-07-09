@@ -12,20 +12,20 @@ import java.util.List;
 @NoArgsConstructor
 public class BaseResultChartVO {
     private String type;
-    private List<String>        legendData;
-    private List<BaseChartVO>   seriesData;
+    private List<String> legend;
+    private List<BaseChartVO> series;
 
-    public BaseResultChartVO(String type, List<BaseChartVO> seriesData) {
+    public BaseResultChartVO(String type, List<BaseChartVO> series) {
         this.type = type;
-        this.seriesData = seriesData;
+        this.series = series;
         this.createLegendData();
     }
 
     private void createLegendData() {
-        if (this.seriesData != null) {
-            this.legendData = new ArrayList<>();
-            this.seriesData.forEach(baseChartVO -> {
-                this.legendData.add(baseChartVO.getName());
+        if (this.series != null) {
+            this.legend = new ArrayList<>();
+            this.series.forEach(baseChartVO -> {
+                this.legend.add(baseChartVO.getName());
             });
         }
     }

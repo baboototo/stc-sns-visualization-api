@@ -1,30 +1,27 @@
 package com.stc.sns.visualization.jpa.domain.channel;
 
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Objects;
+
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Entity
-@Table(name = "BIG_LCLS_CHNL")
-public class BigLclsChnl implements Serializable {
+public class BigMclsChnlPK implements Serializable {
 
     @Id
     @Column(name = "CHNL_LCLS_CD", nullable = false)
     private String chnlLclsCd;
 
-    @Column(name = "CHNL_LCLS_NM", nullable = false)
-    private String chnlLclsNm;
+    @Id
+    @Column(name = "CHNL_MCLS_CD", nullable = false)
+    private String chnlMclsCd;
 
-    @Column(name = "DSP_ORD", nullable = false)
-    private Long dspOrd;
 
 }

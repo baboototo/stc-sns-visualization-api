@@ -15,7 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootTest
-@ActiveProfiles("local")
+@ActiveProfiles("real")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)    // DB 사용 설정
 @RunWith(SpringRunner.class)
 public class JwtFactoryTest {
@@ -29,7 +29,7 @@ public class JwtFactoryTest {
 
     @Before
     public void setUp() {
-        Account account = new Account("baboototo", "qwe123", "곽재영", UserRole.USER, "1");
+        Account account = new Account("kisd", "qwe123", "강덕승", UserRole.USER, "2");
         log.error("userid: {}, password: {}, role: {}", account.getUserId(), account.getPassword(), account.getUserRole());
         this.context = AccountContext.fromAccountModel(account);
     }

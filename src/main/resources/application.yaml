@@ -1,16 +1,46 @@
+
+###################################################################################
+# 공통 설정
+
+server:
+  tomcat:
+    basedir: .
+    accesslog:
+      enabled: true
+      suffix: .log
+      prefix: stc_api_access_log
+      file-date-format: yyyy-MM-dd
+      pattern: "%{yyyy-MM-dd HH:mm:ss}t\t%s\t%r\t%{User-Agent}i\t%{Referer}i\t%a\t%b"
+      directory: /usr/local/stc-service/logs
+
+logging:
+  file: /usr/local/stc-service/logs
+  level:
+    com.stc.sns.visualization: info
+    org.hibernate: debug
+
+spring.jpa.show-sql: true
+spring.jpa.properties.hibernate.format_sql: true
+
+
+mybatis:
+  type-aliases-package: com.stc.sns.visualization.mybatis.domain
+  mapperlocations: mapper/**/*Mapper.xml
+
 ###################################################################################
 # Local 환경
 ---
 server:
   port: 8090
+  tomcat:
+    accesslog:
+      directory: D:\usr\local\stc-service\logs
 
 spring:
   profiles: local
 
   jpa:
     hibernate.ddl-auto: validate
-    properties.hibernate.show_sql: true
-    properties.hibernate.format_sql: true
 
   datasource:
     url: jdbc:log4jdbc:oracle:thin:@121.124.124.40:1521:ORCL
@@ -23,9 +53,35 @@ spring:
       name: user
       password: 1234
 
-mybatis:
-  type-aliases-package: com.stc.sns.visualization.mybatis.domain
-  mapper-locations: mapper/**/*Mapper.xml
+logging:
+  file: D:\usr\local\stc-service\logs
+
+
+###################################################################################
+# Local 환경
+---
+server:
+  port: 8090
+  tomcat:
+    accesslog:
+      directory: D:\usr\local\stc-service\logs
+
+spring:
+  profiles: local-live
+
+  jpa:
+    hibernate.ddl-auto: validate
+
+  datasource:
+    url: jdbc:log4jdbc:oracle:thin:@175.207.12.220:1521:ORCL
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    username: SNS_USER
+    password: STC0501
+
+  security:
+    user:
+      name: user
+      password: 1234
 
 logging:
   file: D:\usr\local\stc-service\logs
@@ -42,8 +98,6 @@ spring:
 
   jpa:
     hibernate.ddl-auto: validate
-    properties.hibernate.show_sql: true
-    properties.hibernate.format_sql: true
 
   datasource:
     url: jdbc:log4jdbc:oracle:thin:@175.207.12.220:1521:ORCL
@@ -56,9 +110,5 @@ spring:
       name: user
       password: 1234
 
-mybatis:
-  type-aliases-package: com.stc.sns.visualization.mybatis.domain
-  mapperlocations: mapper/**/*Mapper.xml
-
 logging:
-  file: \usr\local\stc-service\logs
+  file: /usr/local/stc-service/logs

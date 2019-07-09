@@ -2,6 +2,6 @@
 POST http://localhost:8090/formlogin
 Content-Type: application/json
 
-{"userId" : "baboototo", "password" : "1234"}
+{"userId" : "kisd", "password" : "1234"}
 
 ###

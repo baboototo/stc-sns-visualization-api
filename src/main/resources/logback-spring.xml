@@ -8,9 +8,6 @@
     <logger name="jdbc.resultsettable" level="off" />
     <logger name="jdbc.connection" level="off" />
 
-    <logger name="org.hibernate.type" level="info" />
-    <logger name="org.hibernate" level="info" />
-
     <springProfile name="local">
         <include resource="log/console.xml" />
         <root level="info">
@@ -18,10 +15,10 @@
         </root>
     </springProfile>
 
-    <springProfile name="dev">
-        <include resource="log/file.xml" />
+    <springProfile name="local-live">
+        <include resource="log/console.xml" />
         <root level="info">
-            <appender-ref ref="FILE"/>
+            <appender-ref ref="CONSOLE"/>
         </root>
     </springProfile>
 

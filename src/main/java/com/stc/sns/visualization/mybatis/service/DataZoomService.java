@@ -1,7 +1,6 @@
 package com.stc.sns.visualization.mybatis.service;
 
-import com.stc.sns.visualization.jpa.domain.channel.BigLclsChnl;
-import com.stc.sns.visualization.jpa.domain.channel.BigLclsChnlRepository;
+import com.stc.sns.visualization.jpa.domain.channel.BigMclsChnlRepositoryImpl;
 import com.stc.sns.visualization.mybatis.domain.BaseRequestParamVO;
 import com.stc.sns.visualization.mybatis.domain.DataZoomChartVO;
 import com.stc.sns.visualization.mybatis.domain.DataZoomResultChartVO;
@@ -25,53 +24,101 @@ public class DataZoomService {
     private DataZoomMapper dataZoomMapper;
 
     @Autowired
-    private BigLclsChnlRepository bigLclsChnlRepository;
+    private BigMclsChnlRepositoryImpl bigMclsChnlRepository;
 
 
-    public DataZoomResultChartVO searchChannelByDays(BaseRequestParamVO paramVO) {
 
-        Map<String, List<DataZoomChartVO>> searchDataMap = new HashMap<>();
-        List<String> legend = new ArrayList<>();
+    /**
+     * 채널별 수집 추이 일별 데이터 조회
+     * @param paramVO
+     * @return
+     */
+    public DataZoomResultChartVO searchChannelCollectionByDays(BaseRequestParamVO paramVO) {
 
-        /**
-         * 채널 조회 및 채널에 해당하는 DataZoom 데이터 조회
-         */
-        List<BigLclsChnl> chnlList = bigLclsChnlRepository.findAll();
-        chnlList.forEach(bigLclsChnl -> {
-            // Legend 데이터 생성
-            legend.add(bigLclsChnl.getChnlLclsNm());
+        Map<String, List<Long>> seriesDataMap = new HashMap<>();
 
-            // 채널에 해당하는 DataZoom 데이터 조회
-            paramVO.setChnlCd(bigLclsChnl.getChnlLclsCd());
-            searchDataMap.put(bigLclsChnl.getChnlLclsNm(), this.dataZoomMapper.searchChannelByDays(paramVO));
-        });
-
-        /**
-         * DataZoom 차트 데이터 생성
-         */
-        Map<String, List<Long>> seriesData = new HashMap<>();
+        List<String> legendList = new ArrayList<>();
         List<String> xAxisList = new ArrayList<>();
-        legend.forEach(channelName -> {
+        List<Long> seriesDataList;
 
-            // DataZoom X축 기준 데이터 생성
-            int idx = legend.indexOf(channelName);
-            if (idx == 0) {
-                List<DataZoomChartVO> dataZoomChartVOList = searchDataMap.get(channelName);
-                dataZoomChartVOList.forEach(dataZoomChartVO -> {
-                    xAxisList.add(dataZoomChartVO.getXAxis());
-                });
+        List<String> searchChannelList = paramVO.getChannels();
+        for (String channelCode : searchChannelList) {
+
+            // 채널별 데이터 조회
+            paramVO.setChnlCd(channelCode);
+            List<DataZoomChartVO> searchChannelDataList = this.dataZoomMapper.searchChannelCollectionByDays(paramVO);
+
+            if (searchChannelDataList.size() > 0) {
+
+                DataZoomChartVO channelData = searchChannelDataList.get(0);
+
+                // Legend 등록
+                legendList.add(channelData.getSeries());
+
+                // xAxis 등록
+                if (searchChannelList.indexOf(channelCode) == 0) {
+                    for (DataZoomChartVO baseData : searchChannelDataList) {
+                        xAxisList.add(baseData.getXAxis());
+                    }
+                }
+
+                // series 등록
+                seriesDataList = new ArrayList<>();
+                for (DataZoomChartVO seriesData : searchChannelDataList) {
+                    seriesDataList.add(seriesData.getSeriesValue());
+                }
+                seriesDataMap.put(channelData.getSeries(), seriesDataList);
             }
+        }
 
-            // DataZoom Series 데이터 생성
-            List<Long> seriesValueList = new ArrayList<>();
-            List<DataZoomChartVO> dataZoomChartVOList = searchDataMap.get(channelName);
-            dataZoomChartVOList.forEach(dataZoomChartVO -> {
-                seriesValueList.add(dataZoomChartVO.getSeriesValue());
-            });
-
-            seriesData.put(channelName, seriesValueList);
-        });
-
-        return new DataZoomResultChartVO(legend, xAxisList, seriesData);
+        return new DataZoomResultChartVO(legendList, xAxisList, seriesDataMap);
     }
+
+
+    /**
+     * 특정채널에 해당하는 키워드의 채널 상세정보 수집 추이 일별 데이터 조회
+     * @param paramVO
+     * @return
+     */
+    public DataZoomResultChartVO searchChannelDetailCollectionByDays(BaseRequestParamVO paramVO) {
+        Map<String, List<Long>> seriesDataMap = new HashMap<>();
+
+        List<String> legendList = new ArrayList<>();
+        List<String> xAxisList = new ArrayList<>();
+        List<Long> seriesDataList;
+
+        List<String> searchChannelList = bigMclsChnlRepository.findByMclsCd(paramVO.getChnlCd());
+        for (String channelCode : searchChannelList) {
+
+            // 채널별 데이터 조회
+            paramVO.setChnlCd(channelCode);
+            List<DataZoomChartVO> searchChannelDataList = this.dataZoomMapper.searchChannelDetailCollectionByDays(paramVO);
+
+            if (searchChannelDataList.size() > 0) {
+
+                DataZoomChartVO channelData = searchChannelDataList.get(0);
+
+                // Legend 등록
+                legendList.add(channelData.getSeries());
+
+                // xAxis 등록
+                if (searchChannelList.indexOf(channelCode) == 0) {
+                    for (DataZoomChartVO baseData : searchChannelDataList) {
+                        xAxisList.add(baseData.getXAxis());
+                    }
+                }
+
+                // series 등록
+                seriesDataList = new ArrayList<>();
+                for (DataZoomChartVO seriesData : searchChannelDataList) {
+                    seriesDataList.add(seriesData.getSeriesValue());
+                }
+                seriesDataMap.put(channelData.getSeries(), seriesDataList);
+            }
+        }
+
+        return new DataZoomResultChartVO(legendList, xAxisList, seriesDataMap);
+    }
+
+
 }

@@ -93,8 +93,15 @@ sourceSets {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 배포 파일 설정
-//bootWar {
-//    archiveBaseName = "stc-api"
-//    archiveFileName = "stc-api.war"
-//    archiveVersion = "0.0.0"
-//}
+bootWar {
+    archiveBaseName = "stc-api"
+    archiveFileName = "stc-api.war"
+    archiveVersion = "0.0.0"
+}
+
+bootJar {
+    archiveBaseName = "stc-api"
+    archiveFileName = "stc-api.jar"
+    archiveVersion = "0.0.0"
+
+}

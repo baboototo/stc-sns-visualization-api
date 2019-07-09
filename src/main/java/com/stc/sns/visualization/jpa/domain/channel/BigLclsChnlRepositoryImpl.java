@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BigLclsChnlRepositoryImpl extends QuerydslRepositorySupport{
+public class BigLclsChnlRepositoryImpl extends QuerydslRepositorySupport {
 
     private final JPAQueryFactory jpaQueryFactory;
 
@@ -14,4 +14,5 @@ public class BigLclsChnlRepositoryImpl extends QuerydslRepositorySupport{
         super(BigLclsChnl.class);
         this.jpaQueryFactory = jpaQueryFactory;
     }
+
 }

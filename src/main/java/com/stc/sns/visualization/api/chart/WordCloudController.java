@@ -2,6 +2,7 @@ package com.stc.sns.visualization.api.chart;
 
 import com.stc.sns.visualization.mybatis.domain.BaseRequestParamVO;
 import com.stc.sns.visualization.mybatis.domain.BaseChartVO;
+import com.stc.sns.visualization.mybatis.service.DataZoomService;
 import com.stc.sns.visualization.mybatis.service.WordCloudService;
 import com.stc.sns.visualization.security.tokens.PostAuthorizationToken;
 import org.slf4j.Logger;
@@ -24,21 +25,32 @@ public class WordCloudController {
     private WordCloudService wordCloudService;
 
     /**
-     * Word Cloud 조회
+     * 키워드 조회
      * @param authentication
      * @param paramVO
      * @return
      */
-    @GetMapping("/v1.0/words")
-    public List<BaseChartVO> searchWorldCloud(Authentication authentication
-                                           , @ModelAttribute("BaseRequestParamVO") BaseRequestParamVO paramVO) {
+    @GetMapping("/v1.0/words/{keyword}")
+    public List<BaseChartVO> searchKeywords(Authentication authentication
+            , @PathVariable("keyword")      String keyword
+            , @ModelAttribute("BaseRequestParamVO") BaseRequestParamVO paramVO) {
         PostAuthorizationToken token = (PostAuthorizationToken)authentication;
+
+        paramVO.setKeyword(keyword);
         paramVO.setCustId(token.getAccount().getCustId());
-        return wordCloudService.searchWordCloudList(paramVO);
+        return wordCloudService.searchKeywords(paramVO);
     }
 
+    /**
+     * 키워드에 해당하는 연관 검색어 조회
+     * @param authentication
+     * @param keyword
+     * @param subKeyword
+     * @param paramVO
+     * @return
+     */
     @GetMapping("/v1.0/words/{keyword}/{subKeyword}")
-    public List<BaseChartVO> searchWorldCloud(Authentication authentication
+    public List<BaseChartVO> searchKeywordByWord(Authentication authentication
             , @PathVariable("keyword")      String keyword
             , @PathVariable("subKeyword")   String subKeyword
             , @ModelAttribute("BaseRequestParamVO") BaseRequestParamVO paramVO) {
@@ -47,6 +59,6 @@ public class WordCloudController {
         paramVO.setKeyword(keyword);
         paramVO.setSubKeyword(subKeyword);
         paramVO.setCustId(token.getAccount().getCustId());
-        return wordCloudService.searchWordCloudList(paramVO);
+        return wordCloudService.searchKeywordByWord(paramVO);
     }
 }

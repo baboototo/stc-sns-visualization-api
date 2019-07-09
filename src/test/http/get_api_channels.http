@@ -1,4 +1,4 @@
-POST http://localhost/api/pie/v1.0/channels?keyword=문화
+POST http://localhost:8090/api/pie/v1.0/channels?keyword=문화
 Content-Type: application/json
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTVEMiLCJVU0VSTkFNRSI6ImJhYm9vdG90byIsIlVTRVJfUk9MRSI6IlJPTEVfVVNFUiJ9.oF-cpY1ZdjCTo8fyK0C9UPy11kMUYYBLO0cj_ge1Vvc
 

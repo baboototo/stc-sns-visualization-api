@@ -11,5 +11,17 @@ import java.util.List;
 @Mapper
 public interface DataZoomMapper {
 
-    List<DataZoomChartVO> searchChannelByDays(BaseRequestParamVO paramVO);
+    /**
+     * 채널별 수집 추이 일별 데이터 조회
+     * @param paramVO
+     * @return
+     */
+    List<DataZoomChartVO> searchChannelCollectionByDays(BaseRequestParamVO paramVO);
+
+    /**
+     * 특정채널에 해당하는 키워드의 채널 상세정보 수집 추이 일별 데이터 조회
+     * @param paramVO
+     * @return
+     */
+    List<DataZoomChartVO> searchChannelDetailCollectionByDays(BaseRequestParamVO paramVO);
 }

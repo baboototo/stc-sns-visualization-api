@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stc.sns.visualization.mybatis.mapper.DataMapper">
+    <select id="searchOriginalWebDocument" resultType="map" parameterType="BaseRequestParamVO">
+        SELECT  CHNL_LCLS_NM, CHNL_MCLS_NM, CHNL_SCLS_NM, TTL_NM, LINK_NM, BASE_DATE
+        FROM    (
+                SELECT XX.BASE_DATE, YY.CHNL_LCLS_CD, YY.CHNL_LCLS_NM, YY.CHNL_MCLS_NM, YY.CHNL_SCLS_NM, XX.TTL_NM, XX.LINK_NM,
+                        ROW_NUMBER() OVER (PARTITION BY XX.BASE_DATE, YY.CHNL_LCLS_CD ORDER BY XX.BASE_DATE, YY.CHNL_LCLS_CD, XX.CLC_DOC_NUM) AS ORD
+                FROM (
+                        SELECT  Y.CLC_DOC_NUM, Y.BASE_DATE, Y.CHNL_LCLS_CD, Y.CHNL_MCLS_CD, Y.CHNL_SCLS_CD, Y.TTL_NM, Y.LINK_NM
+                        FROM    BIG_TPC_TXT_ANAL X,
+                                BIG_TPC_RST Y,
+                                BIG_TPC_MST M
+                        WHERE   X.CLC_DOC_NUM  = Y.CLC_DOC_NUM
+                            AND Y.ASK_NUM      = M.ASK_NUM
+                            AND X.WRD_NM       = #{keyword}
+                            AND Y.BASE_DATE    BETWEEN #{startDate} AND #{endDate}
+                            AND M.CUST_ID      = #{custId}
+                            AND M.USE_YN       = 'Y'
+                    <choose>
+                        <when test="channels != null and channels.size > 0">
+                            AND Y.CHNL_LCLS_CD IN
+                            <foreach collection="channels" item="channel" index="index" open="(" separator="," close=")">
+                                #{channel}
+                            </foreach>
+                        </when>
+                        <otherwise>
+                            AND Y.CHNL_LCLS_CD = #{chnlCd}
+                        </otherwise>
+                    </choose>
+
+                    ) XX,
+                    (
+                        SELECT  SC.CHNL_LCLS_CD, SC.CHNL_MCLS_CD, SC.CHNL_SCLS_CD, LC.CHNL_LCLS_NM, MC.CHNL_MCLS_NM, SC.CHNL_SCLS_NM
+                        FROM    BIG_LCLS_CHNL LC,
+                                BIG_MCLS_CHNL MC,
+                                BIG_SCLS_CHNL SC
+                        WHERE   LC.CHNL_LCLS_CD = MC.CHNL_LCLS_CD
+                            AND MC.CHNL_LCLS_CD = SC.CHNL_LCLS_CD
+                            AND MC.CHNL_MCLS_CD = SC.CHNL_MCLS_CD
+                    ) YY
+                WHERE   XX.CHNL_LCLS_CD = YY.CHNL_LCLS_CD
+                    AND XX.CHNL_MCLS_CD = YY.CHNL_MCLS_CD
+                    AND XX.CHNL_SCLS_CD = YY.CHNL_SCLS_CD
+                )
+        WHERE   ORD <![CDATA[<]]> 4
+        ORDER BY BASE_DATE DESC, CHNL_LCLS_CD
+    </select>
+
+</mapper>
+
+
