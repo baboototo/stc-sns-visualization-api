@@ -1,8 +1,10 @@
 package com.stc.sns.visualization.mybatis.service;
 
+import com.stc.sns.visualization.common.KomoranUtils;
 import com.stc.sns.visualization.jpa.domain.channel.BigTpcMstRepositoryImpl;
 import com.stc.sns.visualization.mybatis.domain.BaseChartVO;
 import com.stc.sns.visualization.mybatis.domain.BaseRequestParamVO;
+import com.stc.sns.visualization.mybatis.mapper.CommonMapper;
 import com.stc.sns.visualization.mybatis.mapper.PieMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,10 +15,10 @@ import java.util.List;
 public class PieService {
 
     @Autowired
-    private PieMapper pieMapper;
+    private CommonMapper commonMapper;
 
     @Autowired
-    private BigTpcMstRepositoryImpl bigTpcMstRepository;
+    private PieMapper pieMapper;
 
 
     /**
@@ -25,11 +27,16 @@ public class PieService {
      * @return
      */
     public List<BaseChartVO> searchChannelTotalByKeyword(BaseRequestParamVO paramVO) {
-        List<String> excludeAskNmList = bigTpcMstRepository.findByExcludeAskNm(paramVO.getCustId());
-        excludeAskNmList.add(paramVO.getKeyword());
+        List<BaseChartVO> resultData = this.pieMapper.searchChannelTotalByKeyword(paramVO);
 
-        paramVO.setExcludeKeywords(excludeAskNmList);
-        return this.pieMapper.searchChannelTotalByKeyword(paramVO);
+        if (resultData.size() == 0) {
+            List<String> analyzeList = KomoranUtils.analyzeKeywordList(paramVO.getKeyword());
+            paramVO.setAnalyzeKeywords(analyzeList);
+
+            resultData = this.pieMapper.searchChannelTotalByKeyword(paramVO);
+        }
+
+        return resultData;
     }
 
     /**
@@ -38,10 +45,15 @@ public class PieService {
      * @return
      */
     public List<BaseChartVO> searchChannelDetailTotalByKeyword(BaseRequestParamVO paramVO) {
-        List<String> excludeAskNmList = bigTpcMstRepository.findByExcludeAskNm(paramVO.getCustId());
-        excludeAskNmList.add(paramVO.getKeyword());
+        List<BaseChartVO> resultData = this.pieMapper.searchChannelDetailTotalByKeyword(paramVO);
 
-        paramVO.setExcludeKeywords(excludeAskNmList);
-        return this.pieMapper.searchChannelDetailTotalByKeyword(paramVO);
+        if (resultData.size() == 0) {
+            List<String> analyzeList = KomoranUtils.analyzeKeywordList(paramVO.getKeyword());
+            paramVO.setAnalyzeKeywords(analyzeList);
+
+            resultData = this.pieMapper.searchChannelDetailTotalByKeyword(paramVO);
+        }
+
+        return resultData;
     }
 }

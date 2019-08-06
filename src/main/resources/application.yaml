@@ -31,7 +31,7 @@ mybatis:
 # Local 환경
 ---
 server:
-  port: 8090
+  port: 11422
   tomcat:
     accesslog:
       directory: D:\usr\local\stc-service\logs
@@ -61,7 +61,7 @@ logging:
 # Local 환경
 ---
 server:
-  port: 8090
+  port: 11422
   tomcat:
     accesslog:
       directory: D:\usr\local\stc-service\logs
@@ -91,7 +91,34 @@ logging:
 # Real 환경
 ---
 server:
-  port: 8090
+  port: 11422
+
+spring:
+  profiles: real-mcst
+
+  jpa:
+    hibernate.ddl-auto: validate
+
+  datasource:
+    url: jdbc:log4jdbc:oracle:thin:@175.207.12.220:1521:ORCL
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    username: SNS_USER
+    password: STC0501
+
+  security:
+    user:
+      name: user
+      password: 1234
+
+logging:
+  file: E:\stc-sns-service\logs
+
+
+###################################################################################
+# Real 환경
+---
+server:
+  port: 11422
 
 spring:
   profiles: real

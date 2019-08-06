@@ -3,18 +3,34 @@
 
 <mapper namespace="com.stc.sns.visualization.mybatis.mapper.DataMapper">
     <select id="searchOriginalWebDocument" resultType="map" parameterType="BaseRequestParamVO">
-        SELECT  CHNL_LCLS_NM, CHNL_MCLS_NM, CHNL_SCLS_NM, TTL_NM, LINK_NM, BASE_DATE
+        SELECT  BASE_DATE, CHNL_LCLS_CD, CHNL_LCLS_NM, CHNL_MCLS_NM, CHNL_SCLS_NM, TTL_NM, LINK_NM
         FROM    (
-                SELECT XX.BASE_DATE, YY.CHNL_LCLS_CD, YY.CHNL_LCLS_NM, YY.CHNL_MCLS_NM, YY.CHNL_SCLS_NM, XX.TTL_NM, XX.LINK_NM,
-                        ROW_NUMBER() OVER (PARTITION BY XX.BASE_DATE, YY.CHNL_LCLS_CD ORDER BY XX.BASE_DATE, YY.CHNL_LCLS_CD, XX.CLC_DOC_NUM) AS ORD
+            SELECT  *
+            FROM    (
+                SELECT BASE_DATE, CHNL_LCLS_CD, CHNL_LCLS_NM, CHNL_MCLS_NM, CHNL_SCLS_NM, TTL_NM, LINK_NM, RND_ORD, RND_ORD2
                 FROM (
+                    SELECT XX.BASE_DATE, YY.CHNL_LCLS_CD, YY.CHNL_LCLS_NM, YY.CHNL_MCLS_NM, YY.CHNL_SCLS_NM, XX.TTL_NM, XX.LINK_NM,
+                    ROW_NUMBER() OVER (PARTITION BY XX.BASE_DATE, YY.CHNL_LCLS_CD ORDER BY XX.BASE_DATE, YY.CHNL_LCLS_CD, XX.CLC_DOC_NUM) AS ORD,
+                    dbms_random.random AS RND_ORD,
+                    ROUND(dbms_random.VALUE(1,1000000),0) AS RND_ORD2
+                    FROM (
                         SELECT  Y.CLC_DOC_NUM, Y.BASE_DATE, Y.CHNL_LCLS_CD, Y.CHNL_MCLS_CD, Y.CHNL_SCLS_CD, Y.TTL_NM, Y.LINK_NM
                         FROM    BIG_TPC_TXT_ANAL X,
                                 BIG_TPC_RST Y,
                                 BIG_TPC_MST M
                         WHERE   X.CLC_DOC_NUM  = Y.CLC_DOC_NUM
                             AND Y.ASK_NUM      = M.ASK_NUM
-                            AND X.WRD_NM       = #{keyword}
+                    <choose>
+                        <when test="analyzeKeywords != null and analyzeKeywords.size > 0">
+                            AND X.WRD_NM IN
+                            <foreach collection="analyzeKeywords" item="analyzeKeyword" index="index" open="(" separator="," close=")">
+                                #{analyzeKeyword}
+                            </foreach>
+                        </when>
+                        <otherwise>
+                            AND X.WRD_NM = #{keyword}
+                        </otherwise>
+                    </choose>
                             AND Y.BASE_DATE    BETWEEN #{startDate} AND #{endDate}
                             AND M.CUST_ID      = #{custId}
                             AND M.USE_YN       = 'Y'
@@ -30,22 +46,25 @@
                         </otherwise>
                     </choose>
 
-                    ) XX,
-                    (
-                        SELECT  SC.CHNL_LCLS_CD, SC.CHNL_MCLS_CD, SC.CHNL_SCLS_CD, LC.CHNL_LCLS_NM, MC.CHNL_MCLS_NM, SC.CHNL_SCLS_NM
-                        FROM    BIG_LCLS_CHNL LC,
-                                BIG_MCLS_CHNL MC,
-                                BIG_SCLS_CHNL SC
-                        WHERE   LC.CHNL_LCLS_CD = MC.CHNL_LCLS_CD
-                            AND MC.CHNL_LCLS_CD = SC.CHNL_LCLS_CD
-                            AND MC.CHNL_MCLS_CD = SC.CHNL_MCLS_CD
-                    ) YY
-                WHERE   XX.CHNL_LCLS_CD = YY.CHNL_LCLS_CD
-                    AND XX.CHNL_MCLS_CD = YY.CHNL_MCLS_CD
-                    AND XX.CHNL_SCLS_CD = YY.CHNL_SCLS_CD
+                        ) XX,
+                        (
+                            SELECT  SC.CHNL_LCLS_CD, SC.CHNL_MCLS_CD, SC.CHNL_SCLS_CD, LC.CHNL_LCLS_NM, MC.CHNL_MCLS_NM, SC.CHNL_SCLS_NM
+                            FROM    BIG_LCLS_CHNL LC,
+                                    BIG_MCLS_CHNL MC,
+                                    BIG_SCLS_CHNL SC
+                            WHERE   LC.CHNL_LCLS_CD = MC.CHNL_LCLS_CD
+                                AND MC.CHNL_LCLS_CD = SC.CHNL_LCLS_CD
+                                AND MC.CHNL_MCLS_CD = SC.CHNL_MCLS_CD
+                        ) YY
+                    WHERE   XX.CHNL_LCLS_CD = YY.CHNL_LCLS_CD
+                        AND XX.CHNL_MCLS_CD = YY.CHNL_MCLS_CD
+                        AND XX.CHNL_SCLS_CD = YY.CHNL_SCLS_CD
+                    )
+                ORDER BY RND_ORD2
                 )
-        WHERE   ORD <![CDATA[<]]> 4
-        ORDER BY BASE_DATE DESC, CHNL_LCLS_CD
+            WHERE ROWNUM <![CDATA[<]]> 101
+            )
+        ORDER BY BASE_DATE, CHNL_LCLS_CD
     </select>
 
 </mapper>

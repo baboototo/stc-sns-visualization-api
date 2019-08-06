@@ -20,5 +20,6 @@ public class BaseRequestParamVO {
     private String endDate;
     private String chnlCd;
     private List<String> excludeKeywords;
+    private List<String> analyzeKeywords;
     private List<String> channels;
 }

@@ -12,7 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootTest
-@ActiveProfiles("local")
+@ActiveProfiles("real")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)    // DB 사용 설정
 @RunWith(SpringRunner.class)
 public class AccountCreateTest {
@@ -22,7 +22,7 @@ public class AccountCreateTest {
 
     @Test
     public void createAccount() {
-        Account account = new Account("kisd", "qwe123", "강덕승", UserRole.USER, "2");
+        Account account = new Account("MCST", "qwe123", "한국문화관광연구원", UserRole.USER, "1");
 
         accountRepository.save(account);
     }

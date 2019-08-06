@@ -9,7 +9,7 @@
         FROM (
                 SELECT X.CHNL_LCLS_NM, X.BASE_DATE, NVL(Y.CHN_CNT, 0) AS CHN_CNT
                 FROM (
-                        SELECT  Y.CHNL_LCLS_CD, Y.CHNL_LCLS_NM, X.NO, TO_CHAR(SYSDATE - NO, 'YYYYMMDD') AS BASE_DATE
+                        SELECT  Y.CHNL_LCLS_CD, Y.CHNL_LCLS_NM, X.NO, TO_CHAR(SYSDATE - (NO-1), 'YYYYMMDD') AS BASE_DATE
                         FROM    BIG_TPC_NO X,
                                 BIG_LCLS_CHNL Y
                         WHERE   Y.CHNL_LCLS_CD = #{chnlCd}
@@ -22,7 +22,17 @@
                                 BIG_TPC_MST M
                         WHERE   X.CLC_DOC_NUM = Y.CLC_DOC_NUM
                             AND Y.ASK_NUM = M.ASK_NUM
+                    <choose>
+                        <when test="analyzeKeywords != null and analyzeKeywords.size > 0">
+                            AND X.WRD_NM IN
+                            <foreach collection="analyzeKeywords" item="analyzeKeyword" index="index" open="(" separator="," close=")">
+                                #{analyzeKeyword}
+                            </foreach>
+                        </when>
+                        <otherwise>
                             AND X.WRD_NM = #{keyword}
+                        </otherwise>
+                    </choose>
                             AND Y.BASE_DATE BETWEEN #{startDate} AND #{endDate}
                             AND M.CUST_ID = #{custId}
                             AND M.USE_YN = 'Y'
@@ -42,7 +52,7 @@
         FROM (
                 SELECT X.CHNL_MCLS_NM, X.BASE_DATE, NVL(Y.CHN_CNT, 0) AS CHN_CNT
                 FROM (
-                        SELECT  Y.CHNL_MCLS_CD, Y.CHNL_MCLS_NM, X.NO, TO_CHAR(SYSDATE - NO, 'YYYYMMDD') AS BASE_DATE
+                        SELECT  Y.CHNL_MCLS_CD, Y.CHNL_MCLS_NM, X.NO, TO_CHAR(SYSDATE - (NO-1), 'YYYYMMDD') AS BASE_DATE
                         FROM    BIG_TPC_NO X,
                                 BIG_MCLS_CHNL Y
                         WHERE   Y.CHNL_MCLS_CD = #{chnlCd}
@@ -55,7 +65,17 @@
                                 BIG_TPC_MST M
                         WHERE   X.CLC_DOC_NUM = Y.CLC_DOC_NUM
                             AND Y.ASK_NUM = M.ASK_NUM
+                    <choose>
+                        <when test="analyzeKeywords != null and analyzeKeywords.size > 0">
+                            AND X.WRD_NM IN
+                            <foreach collection="analyzeKeywords" item="analyzeKeyword" index="index" open="(" separator="," close=")">
+                                #{analyzeKeyword}
+                            </foreach>
+                        </when>
+                        <otherwise>
                             AND X.WRD_NM = #{keyword}
+                        </otherwise>
+                    </choose>
                             AND Y.BASE_DATE BETWEEN #{startDate} AND #{endDate}
                             AND M.CUST_ID = #{custId}
                             AND M.USE_YN = 'Y'

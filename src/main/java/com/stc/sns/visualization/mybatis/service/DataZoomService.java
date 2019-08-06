@@ -1,9 +1,11 @@
 package com.stc.sns.visualization.mybatis.service;
 
+import com.stc.sns.visualization.common.KomoranUtils;
 import com.stc.sns.visualization.jpa.domain.channel.BigMclsChnlRepositoryImpl;
 import com.stc.sns.visualization.mybatis.domain.BaseRequestParamVO;
 import com.stc.sns.visualization.mybatis.domain.DataZoomChartVO;
 import com.stc.sns.visualization.mybatis.domain.DataZoomResultChartVO;
+import com.stc.sns.visualization.mybatis.mapper.CommonMapper;
 import com.stc.sns.visualization.mybatis.mapper.DataZoomMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +23,9 @@ public class DataZoomService {
     private static final Logger log = LoggerFactory.getLogger(DataZoomService.class);
 
     @Autowired
+    private CommonMapper commonMapper;
+
+    @Autowired
     private DataZoomMapper dataZoomMapper;
 
     @Autowired
@@ -34,8 +39,14 @@ public class DataZoomService {
      * @return
      */
     public DataZoomResultChartVO searchChannelCollectionByDays(BaseRequestParamVO paramVO) {
-
         Map<String, List<Long>> seriesDataMap = new HashMap<>();
+
+        // 키워드 데이터 확인 후 매칭 키워드가 없을 경우 키워드 형태소 분석 단어 설정
+        int dataCount = this.commonMapper.countKeywords(paramVO);
+        if (dataCount == 0) {
+            List<String> analyzeList = KomoranUtils.analyzeKeywordList(paramVO.getKeyword());
+            paramVO.setAnalyzeKeywords(analyzeList);
+        }
 
         List<String> legendList = new ArrayList<>();
         List<String> xAxisList = new ArrayList<>();
@@ -82,6 +93,13 @@ public class DataZoomService {
      */
     public DataZoomResultChartVO searchChannelDetailCollectionByDays(BaseRequestParamVO paramVO) {
         Map<String, List<Long>> seriesDataMap = new HashMap<>();
+
+        // 키워드 데이터 확인 후 매칭 키워드가 없을 경우 키워드 형태소 분석 단어 설정
+        int dataCount = this.commonMapper.countKeywords(paramVO);
+        if (dataCount == 0) {
+            List<String> analyzeList = KomoranUtils.analyzeKeywordList(paramVO.getKeyword());
+            paramVO.setAnalyzeKeywords(analyzeList);
+        }
 
         List<String> legendList = new ArrayList<>();
         List<String> xAxisList = new ArrayList<>();

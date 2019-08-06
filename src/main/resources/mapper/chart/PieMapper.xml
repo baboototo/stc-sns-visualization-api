@@ -11,14 +11,24 @@
                 BIG_LCLS_CHNL Z
         WHERE   X.CLC_DOC_NUM  = Y.CLC_DOC_NUM
             AND Y.CHNL_LCLS_CD = Z.CHNL_LCLS_CD
+            AND Y.ASK_NUM      = M.ASK_NUM
         <if test="channels.size > 0">
             AND Y.CHNL_LCLS_CD IN
             <foreach collection="channels" item="channel" index="index" open="(" separator="," close=")">
                 #{channel}
             </foreach>
         </if>
-            AND Y.ASK_NUM      = M.ASK_NUM
-            AND X.WRD_NM       = #{keyword}
+        <choose>
+            <when test="analyzeKeywords != null and analyzeKeywords.size > 0">
+                AND X.WRD_NM IN
+                <foreach collection="analyzeKeywords" item="analyzeKeyword" index="index" open="(" separator="," close=")">
+                    #{analyzeKeyword}
+                </foreach>
+            </when>
+            <otherwise>
+                AND X.WRD_NM = #{keyword}
+            </otherwise>
+        </choose>
             AND Y.BASE_DATE BETWEEN #{startDate} AND #{endDate}
             AND M.CUST_ID      = #{custId}
             AND M.USE_YN       = 'Y'
@@ -37,7 +47,17 @@
             AND Y.CHNL_LCLS_CD = #{chnlCd}
             AND Y.CHNL_MCLS_CD = Z.CHNL_MCLS_CD
             AND Y.ASK_NUM      = M.ASK_NUM
-            AND X.WRD_NM       = #{keyword}
+        <choose>
+            <when test="analyzeKeywords != null and analyzeKeywords.size > 0">
+                AND X.WRD_NM IN
+                <foreach collection="analyzeKeywords" item="analyzeKeyword" index="index" open="(" separator="," close=")">
+                    #{analyzeKeyword}
+                </foreach>
+            </when>
+            <otherwise>
+                AND X.WRD_NM = #{keyword}
+            </otherwise>
+        </choose>
             AND Y.BASE_DATE BETWEEN #{startDate} AND #{endDate}
             AND M.CUST_ID      = #{custId}
             AND M.USE_YN       = 'Y'

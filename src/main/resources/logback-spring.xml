@@ -22,6 +22,13 @@
         </root>
     </springProfile>
 
+    <springProfile name="real-mcst">
+        <include resource="log/file.xml" />
+        <root level="info">
+            <appender-ref ref="FILE"/>
+        </root>
+    </springProfile>
+
     <springProfile name="real">
         <include resource="log/file.xml" />
         <root level="info">

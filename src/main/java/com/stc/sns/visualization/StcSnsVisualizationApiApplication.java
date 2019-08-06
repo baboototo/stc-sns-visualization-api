@@ -18,4 +18,14 @@ public class StcSnsVisualizationApiApplication extends SpringBootServletInitiali
     public static void main(String[] args) {
         SpringApplication.run(StcSnsVisualizationApiApplication.class, args);
     }
+
+
+//    @Override
+//    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+//        return application.sources(ServletInitializer.class);
+//    }
+//
+//    public static void main(String[] args) {
+//        SpringApplication.run(ServletInitializer.class, args);
+//    }
 }

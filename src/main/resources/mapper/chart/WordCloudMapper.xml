@@ -14,8 +14,17 @@
                                BIG_TPC_MST M
                          WHERE X.CLC_DOC_NUM  = Y.CLC_DOC_NUM
                             AND Y.ASK_NUM      = M.ASK_NUM
-                            AND X.WRD_NM       = #{keyword}
-                            AND Y.BASE_DATE BETWEEN #{startDate} AND #{endDate}
+                    <choose>
+                        <when test="analyzeKeywords != null and analyzeKeywords.size > 0">
+                            AND X.WRD_NM IN
+                            <foreach collection="analyzeKeywords" item="analyzeKeyword" index="index" open="(" separator="," close=")">
+                                #{analyzeKeyword}
+                            </foreach>
+                        </when>
+                        <otherwise>
+                            AND X.WRD_NM = #{keyword}
+                        </otherwise>
+                    </choose>
                     <choose>
                         <when test="channels != null and channels.size > 0">
                             AND Y.CHNL_LCLS_CD IN
@@ -27,6 +36,7 @@
                             AND Y.CHNL_LCLS_CD = #{chnlCd}
                         </otherwise>
                     </choose>
+                            AND Y.BASE_DATE BETWEEN #{startDate} AND #{endDate}
                             AND M.CUST_ID      = #{custId}
                             AND M.USE_YN       = 'Y'
                        ) XX,
@@ -57,8 +67,17 @@
                                 BIG_TPC_MST M
                         WHERE   X.CLC_DOC_NUM  = Y.CLC_DOC_NUM
                             AND Y.ASK_NUM      = M.ASK_NUM
-                            AND X.WRD_NM       = #{subKeyword}
-                            AND Y.BASE_DATE BETWEEN #{startDate} AND #{endDate}
+                    <choose>
+                        <when test="analyzeKeywords != null and analyzeKeywords.size > 0">
+                            AND X.WRD_NM IN
+                            <foreach collection="analyzeKeywords" item="analyzeKeyword" index="index" open="(" separator="," close=")">
+                                #{analyzeKeyword}
+                            </foreach>
+                        </when>
+                        <otherwise>
+                            AND X.WRD_NM = #{subKeyword}
+                        </otherwise>
+                    </choose>
                     <choose>
                         <when test="channels != null and channels.size > 0">
                             AND Y.CHNL_LCLS_CD IN
@@ -70,6 +89,7 @@
                             AND Y.CHNL_LCLS_CD = #{chnlCd}
                         </otherwise>
                     </choose>
+                            AND Y.BASE_DATE BETWEEN #{startDate} AND #{endDate}
                             AND M.CUST_ID      = #{custId}
                             AND M.USE_YN       = 'Y'
                         ) XX,

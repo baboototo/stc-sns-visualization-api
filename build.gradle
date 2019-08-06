@@ -39,6 +39,7 @@ configurations {
 repositories {
     mavenCentral()
     maven { url "https://plugins.gradle.org/m2/" }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -57,6 +58,8 @@ dependencies {
     implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4:1.16'
     implementation "com.querydsl:querydsl-apt"
     implementation "com.querydsl:querydsl-jpa"
+
+    implementation 'com.github.shin285:KOMORAN:3.3.4'
 
     compileOnly 'org.projectlombok:lombok'
 
@@ -94,14 +97,14 @@ sourceSets {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 배포 파일 설정
 bootWar {
-    archiveBaseName = "stc-api"
-    archiveFileName = "stc-api.war"
+    archiveBaseName = "stc-sns-api"
+    archiveFileName = "stc-sns-api.war"
     archiveVersion = "0.0.0"
 }
 
 bootJar {
-    archiveBaseName = "stc-api"
-    archiveFileName = "stc-api.jar"
+    archiveBaseName = "stc-sns-api"
+    archiveFileName = "stc-sns-api.jar"
     archiveVersion = "0.0.0"
 
 }

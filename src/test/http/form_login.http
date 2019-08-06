@@ -1,7 +1,7 @@
 #POST http://175.207.12.220:8090/formlogin
-POST http://localhost:8090/formlogin
+POST http://175.125.91.228:8082/stc-sns-api/formlogin
 Content-Type: application/json
 
-{"userId" : "kisd", "password" : "1234"}
+{"userId" : "MCST", "password" : "1234"}
 
 ###
