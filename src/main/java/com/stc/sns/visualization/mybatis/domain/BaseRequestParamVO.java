@@ -22,4 +22,5 @@ public class BaseRequestParamVO {
     private List<String> excludeKeywords;
     private List<String> analyzeKeywords;
     private List<String> channels;
+    private int rowCount = 200;
 }

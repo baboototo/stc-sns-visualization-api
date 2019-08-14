@@ -52,7 +52,7 @@
                  ORDER BY COUNT(XX.CLC_DOC_NUM) DESC
               )
 
-         WHERE ROWNUM <![CDATA[<]]> 201
+         WHERE ROWNUM <![CDATA[<=]]> #{rowCount}
     </select>
 
     <select id="searchKeywordByWord" resultType="BaseChartVO" parameterType="BaseRequestParamVO">

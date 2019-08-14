@@ -1,6 +1,6 @@
 package com.stc.sns.visualization.mybatis.service;
 
-import com.stc.sns.visualization.common.KomoranUtils;
+import com.stc.sns.visualization.common.OpenKoreanTextUtils;
 import com.stc.sns.visualization.jpa.domain.channel.BigMclsChnlRepositoryImpl;
 import com.stc.sns.visualization.mybatis.domain.BaseRequestParamVO;
 import com.stc.sns.visualization.mybatis.domain.DataZoomChartVO;
@@ -44,7 +44,7 @@ public class DataZoomService {
         // 키워드 데이터 확인 후 매칭 키워드가 없을 경우 키워드 형태소 분석 단어 설정
         int dataCount = this.commonMapper.countKeywords(paramVO);
         if (dataCount == 0) {
-            List<String> analyzeList = KomoranUtils.analyzeKeywordList(paramVO.getKeyword());
+            List<String> analyzeList = OpenKoreanTextUtils.extractPhrases(paramVO.getKeyword());
             paramVO.setAnalyzeKeywords(analyzeList);
         }
 
@@ -97,7 +97,7 @@ public class DataZoomService {
         // 키워드 데이터 확인 후 매칭 키워드가 없을 경우 키워드 형태소 분석 단어 설정
         int dataCount = this.commonMapper.countKeywords(paramVO);
         if (dataCount == 0) {
-            List<String> analyzeList = KomoranUtils.analyzeKeywordList(paramVO.getKeyword());
+            List<String> analyzeList = OpenKoreanTextUtils.extractPhrases(paramVO.getKeyword());
             paramVO.setAnalyzeKeywords(analyzeList);
         }
 

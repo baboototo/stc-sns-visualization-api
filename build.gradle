@@ -18,6 +18,7 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply plugin: 'scala'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'war'
@@ -43,6 +44,9 @@ repositories {
 }
 
 dependencies {
+
+    implementation files('lib/open-korean-text-2.1.0.jar')
+
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
@@ -50,7 +54,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.data:spring-data-rest-hal-browser'
     implementation 'com.auth0:java-jwt:3.8.0'
     implementation 'com.oracle:ojdbc6:11.2.0.3'
     implementation 'org.mariadb.jdbc:mariadb-java-client'
@@ -61,9 +64,10 @@ dependencies {
 
     implementation 'com.github.shin285:KOMORAN:3.3.4'
 
-    compileOnly 'org.projectlombok:lombok'
+    implementation 'org.scala-lang:scala-library:2.12.4'
+    implementation 'com.twitter.penguin:korean-text:4.4.4'
 
-//    runtimeOnly 'mysql:mysql-connector-java'
+    compileOnly 'org.projectlombok:lombok'
 
     annotationProcessor 'org.projectlombok:lombok'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
@@ -103,8 +107,8 @@ bootWar {
 }
 
 bootJar {
-    archiveBaseName = "stc-sns-api"
-    archiveFileName = "stc-sns-api.jar"
+    archiveBaseName = "stc-api"
+    archiveFileName = "stc-api.jar"
     archiveVersion = "0.0.0"
 
 }

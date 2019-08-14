@@ -1,6 +1,6 @@
 package com.stc.sns.visualization.mybatis.service;
 
-import com.stc.sns.visualization.common.KomoranUtils;
+import com.stc.sns.visualization.common.OpenKoreanTextUtils;
 import com.stc.sns.visualization.jpa.domain.channel.BigTpcMstRepositoryImpl;
 import com.stc.sns.visualization.mybatis.domain.BaseChartVO;
 import com.stc.sns.visualization.mybatis.domain.BaseRequestParamVO;
@@ -43,7 +43,7 @@ public class WordCloudService {
         // 키워드 데이터 확인 후 매칭 키워드가 없을 경우 키워드 형태소 분석 단어 설정
         int dataCount = this.commonMapper.countKeywords(paramVO);
         if (dataCount == 0) {
-            List<String> analyzeList = KomoranUtils.analyzeKeywordList(paramVO.getKeyword());
+            List<String> analyzeList = OpenKoreanTextUtils.extractPhrases(paramVO.getKeyword());
             excludeAskNmList.addAll(analyzeList);
 
             paramVO.setExcludeKeywords(excludeAskNmList);
@@ -69,7 +69,7 @@ public class WordCloudService {
         // 키워드 데이터 확인 후 매칭 키워드가 없을 경우 키워드 형태소 분석 단어 설정
         int dataCount = this.commonMapper.countKeywordByWord(paramVO);
         if (dataCount == 0) {
-            List<String> analyzeList = KomoranUtils.analyzeKeywordList(paramVO.getKeyword());
+            List<String> analyzeList = OpenKoreanTextUtils.extractPhrases(paramVO.getKeyword());
             excludeAskNmList.addAll(analyzeList);
 
             paramVO.setExcludeKeywords(excludeAskNmList);

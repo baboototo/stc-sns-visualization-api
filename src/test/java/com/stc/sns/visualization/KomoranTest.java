@@ -24,6 +24,14 @@ public class KomoranTest {
     private static final Logger log = LoggerFactory.getLogger(KomoranTest.class);
 
     @Test
+    public void KomoranUtilSingletonTest() {
+        List<String> analyzeList = KomoranUtils.analyzeKeywordList("광주세계선수권대회");
+        for (String title : analyzeList) {
+            log.info(title);
+        }
+    }
+
+    @Test
     public void Test() {
         Komoran komoran = KomoranUtils.getInstance();
 
@@ -57,7 +65,5 @@ public class KomoranTest {
         // 5. print morphes with selected pos
         log.info("==========print 'getMorphesByTags()'==========");
         log.info(analyzeResultList.getMorphesByTags("NNG", "NNP", "NNB", "SL").toString());
-
-
     }
 }

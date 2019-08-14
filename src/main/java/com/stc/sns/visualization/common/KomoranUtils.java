@@ -1,6 +1,5 @@
 package com.stc.sns.visualization.common;
 
-import com.stc.sns.visualization.mybatis.service.DataZoomService;
 import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
 import kr.co.shineware.nlp.komoran.core.Komoran;
 import kr.co.shineware.nlp.komoran.model.KomoranResult;
@@ -20,13 +19,14 @@ public class KomoranUtils {
 
     private KomoranUtils(){}
 
+    public static Komoran getInstance() {
+        return KomoranInstance.instance;
+    }
+
     private static class KomoranInstance {
         public static final Komoran instance = new Komoran(DEFAULT_MODEL.FULL);
     }
 
-    public static Komoran getInstance() {
-        return KomoranInstance.instance;
-    }
 
     /**
      * 키워드 형태소 분석 후 사전목록 반환
@@ -38,7 +38,6 @@ public class KomoranUtils {
 
         KomoranResult analyzeResultList = KomoranUtils.getInstance().analyze(keyword);
         for (Pair<String, String> data : analyzeResultList.getList()) {
-            log.info(data.getFirst() + "-" + data.getFirst());
             keywordList.add(data.getFirst());
         }
 

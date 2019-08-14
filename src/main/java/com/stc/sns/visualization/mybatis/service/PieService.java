@@ -1,7 +1,6 @@
 package com.stc.sns.visualization.mybatis.service;
 
-import com.stc.sns.visualization.common.KomoranUtils;
-import com.stc.sns.visualization.jpa.domain.channel.BigTpcMstRepositoryImpl;
+import com.stc.sns.visualization.common.OpenKoreanTextUtils;
 import com.stc.sns.visualization.mybatis.domain.BaseChartVO;
 import com.stc.sns.visualization.mybatis.domain.BaseRequestParamVO;
 import com.stc.sns.visualization.mybatis.mapper.CommonMapper;
@@ -30,7 +29,7 @@ public class PieService {
         List<BaseChartVO> resultData = this.pieMapper.searchChannelTotalByKeyword(paramVO);
 
         if (resultData.size() == 0) {
-            List<String> analyzeList = KomoranUtils.analyzeKeywordList(paramVO.getKeyword());
+            List<String> analyzeList = OpenKoreanTextUtils.extractPhrases(paramVO.getKeyword());
             paramVO.setAnalyzeKeywords(analyzeList);
 
             resultData = this.pieMapper.searchChannelTotalByKeyword(paramVO);
@@ -48,7 +47,7 @@ public class PieService {
         List<BaseChartVO> resultData = this.pieMapper.searchChannelDetailTotalByKeyword(paramVO);
 
         if (resultData.size() == 0) {
-            List<String> analyzeList = KomoranUtils.analyzeKeywordList(paramVO.getKeyword());
+            List<String> analyzeList = OpenKoreanTextUtils.extractPhrases(paramVO.getKeyword());
             paramVO.setAnalyzeKeywords(analyzeList);
 
             resultData = this.pieMapper.searchChannelDetailTotalByKeyword(paramVO);
