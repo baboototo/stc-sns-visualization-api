@@ -27,7 +27,7 @@ public class OpenKoreanTextTest {
     @Test
     public void Test() {
 
-        String text = "광주선수권대회 ";
+        String text = "BTS방탄소년단야동#방소";
 
         // Normalize
         CharSequence normalized = OpenKoreanTextProcessorJava.normalize(text);
@@ -61,8 +61,5 @@ public class OpenKoreanTextTest {
         }
         log.info("--------------------------------");
 
-
-        phrases = OpenKoreanTextProcessorJava.extractPhrases(tokens, false, false);
-        System.out.println(phrases);
     }
 }

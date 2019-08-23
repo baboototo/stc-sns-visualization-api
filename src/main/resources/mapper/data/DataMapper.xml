@@ -64,7 +64,7 @@
                 )
             WHERE ROWNUM <![CDATA[<]]> 101
             )
-        ORDER BY BASE_DATE, CHNL_LCLS_CD
+        ORDER BY BASE_DATE DESC, CHNL_LCLS_CD ASC
     </select>
 
 </mapper>
