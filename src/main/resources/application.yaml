@@ -119,6 +119,11 @@ logging:
 ---
 server:
   port: 11422
+  ssl:
+    enabled: true
+    key-store: /usr/local/stc/ssl/keystore
+    key-alias: alias
+    key-store-password: "!4416stc"
 
 spring:
   profiles: real
