@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -35,9 +36,19 @@ public class WordCloudService {
      */
     public List<BaseChartVO> searchKeywords(BaseRequestParamVO paramVO) {
 
-        // 제외 키워드 조회 및 파라미터 설정
-        List<String> excludeAskNmList = bigTpcMstRepository.findByExcludeAskNm(paramVO.getCustId());
-        excludeAskNmList.add(paramVO.getKeyword());
+        // 제외 키워드 목록 List
+        List<String> excludeAskNmList = new ArrayList<>();
+
+        // 제외 키워드 적용시 설정
+        if ("Y".equals(paramVO.getUseExcludeKeyword())) {
+            excludeAskNmList = bigTpcMstRepository.findByExcludeAskNm(paramVO.getCustId(), paramVO.getKeyword());
+        }
+
+        // 사용자 입력 조회 키워드 제외 적용시 설정
+        if ("Y".equals(paramVO.getUseExcludeSearchKeyword())) {
+            excludeAskNmList.add(paramVO.getKeyword());
+        }
+
         paramVO.setExcludeKeywords(excludeAskNmList);
 
         // 키워드 데이터 확인 후 매칭 키워드가 없을 경우 키워드 형태소 분석 단어 설정
@@ -61,9 +72,19 @@ public class WordCloudService {
      */
     public List<BaseChartVO> searchKeywordByWord(BaseRequestParamVO paramVO) {
 
-        // 제외 키워드 조회 및 파라미터 설정
-        List<String> excludeAskNmList = bigTpcMstRepository.findByExcludeAskNm(paramVO.getCustId());
-        excludeAskNmList.add(paramVO.getSubKeyword());
+        // 제외 키워드 목록 List
+        List<String> excludeAskNmList = new ArrayList<>();
+
+        // 제외 키워드 적용시 설정
+        if ("Y".equals(paramVO.getUseExcludeKeyword())) {
+            excludeAskNmList = bigTpcMstRepository.findByExcludeAskNm(paramVO.getCustId(), paramVO.getSubKeyword());
+        }
+
+        // 사용자 입력 조회 키워드 제외 적용시 설정
+        if ("Y".equals(paramVO.getUseExcludeSearchKeyword())) {
+            excludeAskNmList.add(paramVO.getSubKeyword());
+        }
+
         paramVO.setExcludeKeywords(excludeAskNmList);
 
         // 키워드 데이터 확인 후 매칭 키워드가 없을 경우 키워드 형태소 분석 단어 설정

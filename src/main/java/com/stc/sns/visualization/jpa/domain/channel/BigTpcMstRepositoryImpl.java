@@ -24,11 +24,13 @@ public class BigTpcMstRepositoryImpl extends QuerydslRepositorySupport{
      * @param custId
      * @return
      */
-    public List<String> findByExcludeAskNm(String custId) {
+    public List<String> findByExcludeAskNm(String custId, String keyword) {
         return this.jpaQueryFactory.selectDistinct(bigTpcMst.askNm).from(bigTpcMst)
                 .where(bigTpcMst.custId.eq(custId))
                 .where(bigTpcMst.useYn.eq("Y"))
+                .where(bigTpcMst.askNm.ne(keyword))
                 .where(bigTpcMst.apiTypeCd.eq("01")).fetch();
     }
+
 
 }

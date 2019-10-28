@@ -3,7 +3,7 @@
 
 <mapper namespace="com.stc.sns.visualization.mybatis.mapper.PieMapper">
     <select id="searchChannelTotalByKeyword" resultType="BaseChartVO" parameterType="BaseRequestParamVO">
-        SELECT  Z.CHNL_LCLS_NM          AS name
+        SELECT  Z.CHNL_LCLS_NM1         AS name
                 , COUNT(X.CLC_DOC_NUM)  AS value
         FROM    BIG_TPC_TXT_ANAL X,
                 BIG_TPC_RST Y,
@@ -32,7 +32,7 @@
             AND Y.BASE_DATE BETWEEN #{startDate} AND #{endDate}
             AND M.CUST_ID      = #{custId}
             AND M.USE_YN       = 'Y'
-        GROUP BY Z.CHNL_LCLS_NM, Z.DSP_ORD
+        GROUP BY Z.CHNL_LCLS_NM1, Z.DSP_ORD
         ORDER BY Z.DSP_ORD
     </select>
 

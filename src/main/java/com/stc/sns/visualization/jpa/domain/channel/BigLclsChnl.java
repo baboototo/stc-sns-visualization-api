@@ -1,7 +1,6 @@
 package com.stc.sns.visualization.jpa.domain.channel;
 
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,5 +25,8 @@ public class BigLclsChnl implements Serializable {
 
     @Column(name = "DSP_ORD", nullable = false)
     private Long dspOrd;
+
+    @Column(name = "CHNL_LCLS_NM1", nullable = false)
+    private String chnlLclsNm1;
 
 }

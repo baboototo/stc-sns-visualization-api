@@ -19,6 +19,8 @@ public class BaseRequestParamVO {
     private String startDate;
     private String endDate;
     private String chnlCd;
+    private String useExcludeSearchKeyword = "Y";
+    private String useExcludeKeyword = "Y";
     private List<String> excludeKeywords;
     private List<String> analyzeKeywords;
     private List<String> channels;
