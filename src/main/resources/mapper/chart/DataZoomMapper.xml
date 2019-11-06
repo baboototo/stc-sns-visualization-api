@@ -9,7 +9,7 @@
         FROM (
                 SELECT X.CHNL_LCLS_NM, X.BASE_DATE, NVL(Y.CHN_CNT, 0) AS CHN_CNT
                 FROM (
-                        SELECT  Y.CHNL_LCLS_CD, Y.CHNL_LCLS_NM1 AS CHNL_LCLS_NM, X.NO, TO_CHAR(SYSDATE - (NO-1), 'YYYYMMDD') AS BASE_DATE
+                        SELECT  Y.CHNL_LCLS_CD, Y.CHNL_LCLS_NM, X.NO, TO_CHAR(SYSDATE - (NO-1), 'YYYYMMDD') AS BASE_DATE
                         FROM    BIG_TPC_NO X,
                                 BIG_LCLS_CHNL Y
                         WHERE   Y.CHNL_LCLS_CD = #{chnlCd}

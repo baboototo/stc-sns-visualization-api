@@ -138,5 +138,4 @@ public class DataZoomService {
         return new DataZoomResultChartVO(legendList, xAxisList, seriesDataMap);
     }
 
-
 }

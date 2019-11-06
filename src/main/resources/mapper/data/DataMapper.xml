@@ -48,7 +48,7 @@
 
                         ) XX,
                         (
-                            SELECT  SC.CHNL_LCLS_CD, SC.CHNL_MCLS_CD, SC.CHNL_SCLS_CD, LC.CHNL_LCLS_NM1 AS CHNL_LCLS_NM, MC.CHNL_MCLS_NM, SC.CHNL_SCLS_NM1 AS CHNL_SCLS_NM
+                            SELECT  SC.CHNL_LCLS_CD, SC.CHNL_MCLS_CD, SC.CHNL_SCLS_CD, LC.CHNL_LCLS_NM, MC.CHNL_MCLS_NM, SC.CHNL_SCLS_NM1 AS CHNL_SCLS_NM
                             FROM    BIG_LCLS_CHNL LC,
                                     BIG_MCLS_CHNL MC,
                                     BIG_SCLS_CHNL SC
