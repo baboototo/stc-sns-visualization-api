@@ -73,6 +73,9 @@ spring:
     hibernate.ddl-auto: validate
 
   datasource:
+    hikari:
+      connection-timeout: 30000
+      validation-timeout: 10000
     url: jdbc:log4jdbc:oracle:thin:@175.207.12.220:1521:ORCL
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     username: SNS_USER
@@ -100,6 +103,9 @@ spring:
     hibernate.ddl-auto: validate
 
   datasource:
+    hikari:
+      connection-timeout: 30000
+      validation-timeout: 10000
     url: jdbc:log4jdbc:oracle:thin:@175.207.12.220:1521:ORCL
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     username: SNS_USER
@@ -111,7 +117,7 @@ spring:
       password: 1234
 
 logging:
-  file: E:\stc-sns-service\logs
+  file: D:\stc-sns-service\logs
 
 
 ###################################################################################
