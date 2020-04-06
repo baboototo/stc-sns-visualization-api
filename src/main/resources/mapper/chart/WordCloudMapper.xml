@@ -8,7 +8,8 @@
           FROM (
                 SELECT YY.WRD_NM, COUNT(XX.CLC_DOC_NUM) AS DOC_CNT
                   FROM (
-                        SELECT X.CLC_DOC_NUM
+                        SELECT  /*+ ordered  */
+                                X.CLC_DOC_NUM
                           FROM BIG_TPC_TXT_ANAL X,
                                BIG_TPC_RST Y,
                                BIG_TPC_MST M
@@ -61,7 +62,8 @@
         FROM (
                 SELECT  YY.WRD_NM, COUNT(XX.CLC_DOC_NUM) AS DOC_CNT
                 FROM    (
-                        SELECT  X.CLC_DOC_NUM
+                        SELECT  /*+ ordered  */
+                                X.CLC_DOC_NUM
                         FROM    BIG_TPC_TXT_ANAL X,
                                 BIG_TPC_RST Y,
                                 BIG_TPC_MST M
